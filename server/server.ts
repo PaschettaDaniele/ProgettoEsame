@@ -10,8 +10,8 @@ import { Double, MongoClient, ObjectId } from "mongodb";
 import cors from "cors"; // @types/cors
 import fileUpload, { UploadedFile } from "express-fileupload";
 import cloudinary, { UploadApiResponse } from "cloudinary";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+// import bcrypt from "bcryptjs";
+// import jwt from "jsonwebtoken";
 
 // config
 const app = express();
@@ -19,14 +19,14 @@ const HTTP_PORT = process.env.PORT || 1337;
 dotenv.config({ path: ".env" });
 const DBNAME = "5b";
 const CONNECTION_STRING = process.env.connectionString;
-cloudinary.v2.config(JSON.parse(process.env.cloudinary as string));
+// cloudinary.v2.config(JSON.parse(process.env.cloudinary as string));
 const corsOptions = {
   origin: function (origin: any, callback: any) {
     return callback(null, true);
   },
   credentials: true,
 };
-const privateKey = fs.readFileSync("keys/privateKey.pem", "utf8");
+// const privateKey = fs.readFileSync("keys/privateKey.pem", "utf8");
 const DURATA_TOKEN = 50; // sec
 
 // ***************************** Avvio ****************************************
@@ -95,32 +95,32 @@ app.post(
               res.send("User not found");
             } else {
               //confronto la password
-              bcrypt.compare(
-                req.body.password,
-                dbUser.password,
-                (err: Error, ris: Boolean) => {
-                  if (err) {
-                    res.status(500);
-                    res.send("Errore bcrypt " + err.message);
-                    console.log(err.stack);
-                  } else {
-                    if (!ris) {
-                      // password errata
-                      res.status(401);
-                      res.send("Wrong password");
-                    } else {
-                      let token = createToken(dbUser);
-                      res.setHeader("Authorization", token);
-                      // Per permettere le richieste extra domain
-                      res.setHeader(
-                        "Access-Control-Exspose-Headers",
-                        "Authorization"
-                      );
-                      res.send({ ris: "ok" });
-                    }
-                  }
-                }
-              );
+              // bcrypt.compare(
+              //   req.body.password,
+              //   dbUser.password,
+              //   (err: Error, ris: Boolean) => {
+              //     if (err) {
+              //       res.status(500);
+              //       res.send("Errore bcrypt " + err.message);
+              //       console.log(err.stack);
+              //     } else {
+              //       if (!ris) {
+              //         // password errata
+              //         res.status(401);
+              //         res.send("Wrong password");
+              //       } else {
+              //         let token = createToken(dbUser);
+              //         res.setHeader("Authorization", token);
+              //         // Per permettere le richieste extra domain
+              //         res.setHeader(
+              //           "Access-Control-Exspose-Headers",
+              //           "Authorization"
+              //         );
+              //         res.send({ ris: "ok" });
+              //       }
+              //     }
+              //   }
+              // );
             }
           })
           .catch((err: Error) => {
@@ -148,9 +148,9 @@ function createToken(user: any) {
     _id: user._id,
     username: user.username,
   };
-  let token = jwt.sign(payload, privateKey);
-  console.log("Creato nuovo token " + token);
-  return token;
+  // let token = jwt.sign(payload, privateKey);
+  // console.log("Creato nuovo token " + token);
+  // return token;
 }
 
 // 8. gestione Logout
@@ -163,19 +163,19 @@ app.use("/api", function (req: any, res, next) {
     res.send("Token mancante");
   } else {
     let token: any = req.headers.authorization;
-    jwt.verify(token, privateKey, (err: any, payload: any) => {
-      if (err) {
-        res.status(403);
-        res.send("Token scaduto o corrotto");
-      } else {
-        let newToken = createToken(payload);
-        res.setHeader("Authorization", token);
-        // Per permettere le richieste extra domain
-        res.setHeader("Access-Control-Exspose-Headers", "Authorization");
-        req["payload"] = payload;
-        next();
-      }
-    });
+    // jwt.verify(token, privateKey, (err: any, payload: any) => {
+    //   if (err) {
+    //     res.status(403);
+    //     res.send("Token scaduto o corrotto");
+    //   } else {
+    //     let newToken = createToken(payload);
+    //     res.setHeader("Authorization", token);
+    //     // Per permettere le richieste extra domain
+    //     res.setHeader("Access-Control-Exspose-Headers", "Authorization");
+    //     req["payload"] = payload;
+    //     next();
+    //   }
+    // });
   }
 });
 
