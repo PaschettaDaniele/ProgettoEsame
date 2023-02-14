@@ -2,7 +2,7 @@
     "users": [
         {
             "_id": "5c9b5b5b5b5b5b5b5b5b5b5b",
-            "name": "Admin",
+            "username": "Admin",
             "surname": "Admin",
             "email": "",
             "password": "admin",

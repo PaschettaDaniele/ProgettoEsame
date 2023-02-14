@@ -17,7 +17,7 @@ import cloudinary, { UploadApiResponse } from "cloudinary";
 const app = express();
 const HTTP_PORT = process.env.PORT || 1337;
 dotenv.config({ path: ".env" });
-const DBNAME = "5b";
+const DBNAME = "affittoEsubaffitto";
 const CONNECTION_STRING = process.env.connectionString;
 // cloudinary.v2.config(JSON.parse(process.env.cloudinary as string));
 const corsOptions = {
@@ -26,7 +26,7 @@ const corsOptions = {
   },
   credentials: true,
 };
-// const privateKey = fs.readFileSync("keys/privateKey.pem", "utf8");
+const privateKey = fs.readFileSync("keys/key.pem", "utf8");
 const DURATA_TOKEN = 50; // sec
 
 // ***************************** Avvio ****************************************
@@ -58,12 +58,9 @@ app.use("/", express.json({ limit: "20mb" }));
 app.use("/", express.urlencoded({ extended: true, limit: "20mb" }));
 
 // 4 - binary upload
-app.use(
-  "/",
-  fileUpload({
+app.use("/", fileUpload({
     limits: { fileSize: 20 * 1024 * 1024 }, // 20*1024*1024 // 20 M
-  })
-);
+}));
 
 // 5 - log dei parametri
 app.use("/", function (req, res, next) {
@@ -78,64 +75,55 @@ app.use("/", function (req, res, next) {
 app.use("/", cors(corsOptions));
 
 // 7. gestione login
-app.post(
-  "/api/login",
-  function (req: Request, res: Response, next: NextFunction) {
+app.post("/api/login", function (req: Request, res: Response, next: NextFunction) {
     let connection = new MongoClient(CONNECTION_STRING as string);
-    connection
-      .connect()
-      .then((client: MongoClient) => {
-        const collection = client.db(DBNAME).collection("mails");
-        let regex = new RegExp(`^${req.body.username}$`, "i");
-        collection
-          .findOne({ username: regex })
-          .then((dbUser: any) => {
-            if (!dbUser) {
-              res.status(401); // user o password non validi
-              res.send("User not found");
-            } else {
-              //confronto la password
-              // bcrypt.compare(
-              //   req.body.password,
-              //   dbUser.password,
-              //   (err: Error, ris: Boolean) => {
-              //     if (err) {
-              //       res.status(500);
-              //       res.send("Errore bcrypt " + err.message);
-              //       console.log(err.stack);
-              //     } else {
-              //       if (!ris) {
-              //         // password errata
-              //         res.status(401);
-              //         res.send("Wrong password");
-              //       } else {
-              //         let token = createToken(dbUser);
-              //         res.setHeader("Authorization", token);
-              //         // Per permettere le richieste extra domain
-              //         res.setHeader(
-              //           "Access-Control-Exspose-Headers",
-              //           "Authorization"
-              //         );
-              //         res.send({ ris: "ok" });
-              //       }
-              //     }
-              //   }
-              // );
-            }
-          })
-          .catch((err: Error) => {
-            res.status(500);
-            res.send("Query error " + err.message);
-            console.log(err.stack);
-          })
-          .finally(() => {
-            client.close();
-          });
-      })
-      .catch((err: Error) => {
-        res.status(503);
-        res.send("Database service unavailable");
-      });
+    connection.connect().then((client: MongoClient) => {
+      const collection = client.db(DBNAME).collection("users");
+      let regex = new RegExp(`^${req.body.username}$`, "i");
+      collection.findOne({ username: regex }).then((dbUser: any) => {
+        if (!dbUser) {
+          res.status(401); // user o password non validi
+          res.send("User not found");
+        } else {
+          //confronto la password
+          // bcrypt.compare(
+          //   req.body.password,
+          //   dbUser.password,
+          //   (err: Error, ris: Boolean) => {
+          //     if (err) {
+          //       res.status(500);
+          //       res.send("Errore bcrypt " + err.message);
+          //       console.log(err.stack);
+          //     } else {
+          //       if (!ris) {
+          //         // password errata
+          //         res.status(401);
+          //         res.send("Wrong password");
+          //       } else {
+          //         let token = createToken(dbUser);
+          //         res.setHeader("Authorization", token);
+          //         // Per permettere le richieste extra domain
+          //         res.setHeader(
+          //           "Access-Control-Exspose-Headers",
+          //           "Authorization"
+          //         );
+          //         res.send({ ris: "ok" });
+          //       }
+          //     }
+          //   }
+          // );
+          }
+        }).catch((err: Error) => {
+          res.status(500);
+          res.send("Query error " + err.message);
+          console.log(err.stack);
+        }).finally(() => {
+          client.close();
+        });
+      }).catch((err: Error) => {
+      res.status(503);
+      res.send("Database service unavailable");
+    });
   }
 );
 
@@ -182,13 +170,10 @@ app.use("/api", function (req: any, res, next) {
 // 10. Apertura della connessione
 app.use("/api/", function (req: any, res: any, next: NextFunction) {
   let connection = new MongoClient(CONNECTION_STRING as string);
-  connection
-    .connect()
-    .then((client: any) => {
+  connection.connect().then((client: any) => {
       req["connessione"] = client;
       next();
-    })
-    .catch((err: any) => {
+    }).catch((err: any) => {
       let msg = "Errore di connessione al db";
       res.status(503).send(msg);
     });
@@ -196,22 +181,7 @@ app.use("/api/", function (req: any, res: any, next: NextFunction) {
 
 /* ********************* (Sezione 3) USER ROUTES  ************************** */
 
-app.get("/api/elencoMail", (req: any, res: Response, next: NextFunction) => {
-  /*res.status(403);
-    res.send("User unauthorized");*/
-  let collection = req["connessione"].db(DBNAME).collection("mails");
-  let _id = req["payload"]._id;
-  let oId = new ObjectId(_id);
-  collection.findOne({ _id: oId }, (err: Error, data: any) => {
-    if (err) {
-      res.status(500);
-      res.send("Errore esecuzione query");
-    } else {
-      res.send(data.mail.reverse());
-    }
-    req["connessione"].close();
-  });
-});
+
 
 /* ********************** (Sezione 4) DEFAULT ROUTE  ************************* */
 // Default route
