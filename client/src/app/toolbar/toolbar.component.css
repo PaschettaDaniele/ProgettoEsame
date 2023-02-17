@@ -125,3 +125,44 @@
 .option:hover {
   background-color: #e5e5e5;
 }
+
+@media screen and (max-width: 1000px) {
+  .header-container {
+    padding-inline: 20px;
+  }
+
+
+}
+
+@media screen and (max-width: 800px) {
+  .row>* {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-container {
+    padding-inline: 20px;
+  }
+
+  .toolbar {
+    height: auto;
+    padding-block: 20px;
+  }
+
+  .bar {
+    order: 3;
+    width: 100%;
+  }
+
+  .icon, .tools {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .bar {
+    order: 3;
+    width: 90vw;
+  }
+}

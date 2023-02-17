@@ -16,6 +16,7 @@ export class ToolbarComponent {
 
   onClickLogin(page: string) {
     ModalMenager.openLogin(page);
+    this.viewOptions();
   }
 }
 
