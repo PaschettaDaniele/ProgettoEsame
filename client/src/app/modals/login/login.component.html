@@ -1,1 +1,56 @@
-<p *ngIf="isVisible">{{ isRegistration ? "Registration" : "Login" }} works!</p>
+<div *ngIf="isVisible" class="modal" role="dialog" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          {{isRegistration ? 'Register' : 'Login'}}
+        </h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <div class="row" *ngIf="isRegistration">
+          <!-- Register -->
+          <input type="text" class="form-control" placeholder="Username">
+          <input type="text" class="form-control" placeholder="Name and Surname">
+          <input type="text" class="form-control" placeholder="Email">
+          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Confirm Password">
+        </div>
+
+        <div class="row" *ngIf="!isRegistration">
+          <!-- Login -->
+            <input type="text" class="form-control" placeholder="Email or Username">
+            <input type="password" class="form-control" placeholder="Password">
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" id="btnConfirm" class="btn">Save</button>
+
+        <div class="row" style="width: 100%; border-top: 1px solid #dee2e6;">
+
+          <div class="col-12" *ngIf="isRegistration">
+            <p class="notAn">Already have an account? <a (click)="isRegistration = false">Login</a></p>
+          </div>
+
+          <div class="col-12" *ngIf="!isRegistration">
+            <p class="notAn">Do not have an account? <a (click)="isRegistration = true">Register</a></p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
