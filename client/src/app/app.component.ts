@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { LoginComponent } from './modals/login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +9,11 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
+  @ViewChild(ToolbarComponent, {static : false}) login: any;
+
+
+
+
   title = 'client';
   token: string | null = null;
   constructor() {

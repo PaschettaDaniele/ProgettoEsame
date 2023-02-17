@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
+import { ModalMenager } from '../utils/modalsMenager';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,9 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent {
+  @Output()
   options : boolean = false;
+  constructor(private modalsMenager : ModalMenager) { }
 
   viewOptions(){
     this.options = !this.options;
   }
+
+  onClickLogin(page: string){
+    this.modalsMenager.openLogin();
+  }
 }
+

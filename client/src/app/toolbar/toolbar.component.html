@@ -36,10 +36,10 @@
           </svg>
       </a>
       <div id="options" *ngIf="options">
-        <a class="option">
+        <a class="option" (click)="onClickLogin('register')">
           <span>registrati</span>
         </a>
-        <a class="option">
+        <a class="option" (click)="onClickLogin('login')">
           <span>accedi</span>
         </a>
       </div>
