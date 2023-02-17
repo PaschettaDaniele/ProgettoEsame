@@ -7,16 +7,15 @@ import { ModalMenager } from '../utils/modalsMenager';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent {
-  @Output()
-  options : boolean = false;
-  constructor(private modalsMenager : ModalMenager) { }
+  options: boolean = false;
+  constructor() { }
 
-  viewOptions(){
+  viewOptions() {
     this.options = !this.options;
   }
 
-  onClickLogin(page: string){
-    this.modalsMenager.openLogin();
+  onClickLogin(page: string) {
+    ModalMenager.openLogin(page);
   }
 }
 

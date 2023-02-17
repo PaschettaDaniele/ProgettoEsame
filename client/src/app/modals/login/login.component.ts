@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ModalMenager } from 'src/app/utils/modalsMenager';
 
 @Component({
   selector: 'app-login',
@@ -7,12 +8,26 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
   isVisible: boolean = false;
+  isRegistration: boolean = false;
 
-  open(){
-    this.isVisible = true;
+  constructor() {
+    ModalMenager.login = this;
   }
 
-  close(){
+  manage(type: string) {
+    if (this.isVisible) this.close();
+    else this.open(type);
+  }
+
+  open(type: string) {
+    this.isVisible = true;
+    this.isRegistration = false;
+    if (type == "registration") {
+      this.isRegistration = true;
+    }
+  }
+
+  close() {
     this.isVisible = false;
   }
 }

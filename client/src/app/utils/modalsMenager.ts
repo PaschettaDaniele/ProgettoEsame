@@ -3,13 +3,14 @@ import { LoginComponent } from '../modals/login/login.component';
 
 @Injectable({ providedIn: 'root' })
 export class ModalMenager {
-  constructor(private login: LoginComponent) { }
+  static login: LoginComponent;
+  constructor() { }
 
-  openLogin(){
-    this.login.open();
+  static openLogin(type: string) {
+    this.login.open(type);
   }
 
-  closeLogin(){
+  static closeLogin() {
     this.login.close();
   }
 }
