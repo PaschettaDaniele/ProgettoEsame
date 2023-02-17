@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/utils/loginService.service';
 import { ModalMenager } from 'src/app/utils/modalsMenager';
+
 
 @Component({
   selector: 'app-login',
@@ -10,7 +13,7 @@ export class LoginComponent {
   isVisible: boolean = false;
   isRegistration: boolean = false;
 
-  constructor() {
+  constructor(private http : HttpClient) {
     ModalMenager.login = this;
   }
 
@@ -29,5 +32,19 @@ export class LoginComponent {
 
   close() {
     this.isVisible = false;
+  }
+
+  login() {
+    let usernameOrEmail;
+    let password;
+    LoginService.login(this.http, "usernameOrEmail", "password");
+  }
+
+  register() {
+    let username;
+    let email;
+    let password;
+    let password2;
+    LoginService.register(this.http, "username.value", "email.value", "password.value", "password2.value");
   }
 }

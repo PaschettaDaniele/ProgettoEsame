@@ -123,7 +123,7 @@
 }
 
 .option:hover {
-  background-color: #e5e5e5;
+  background-color: var(--primary-color);
 }
 
 @media screen and (max-width: 1000px) {
