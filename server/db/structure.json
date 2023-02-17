@@ -3,14 +3,13 @@
         {
             "_id": "5c9b5b5b5b5b5b5b5b5b5b5b",
             "username": "Admin",
-            "surname": "Admin",
+            "name": "Admin",
             "email": "",
             "password": "admin",
             "role": "admin",
             "active": true
         }
     ],
-
     "places": [
         {
             "_id": "5c9b5b5b5b5b5b5b5b5b5b5b",
