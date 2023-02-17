@@ -163,7 +163,7 @@ app.use("/api/logout", function (req: any, res, next) {
 })
 
 // 9. Controllo del Token
-app.use("/api", function (req: any, res, next) {
+app.use("/api-token", function (req: any, res, next) {
   let token = readCookie(req);
   if (token == "") {
     res.status(403);
