@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { LoadingService } from 'src/app/utils/loading.service';
 import { LoginService } from 'src/app/utils/loginService.service';
 import { ModalMenager } from 'src/app/utils/modalsMenager';
 
@@ -12,6 +13,9 @@ import { ModalMenager } from 'src/app/utils/modalsMenager';
 export class LoginComponent {
   isVisible: boolean = false;
   isRegistration: boolean = false;
+  isLoading: boolean = false;
+  loadingSubscription: any = false;
+  loggingSubscription: any = false;
 
   // for login
   usernameOrEmail: string = "Admin";
@@ -25,6 +29,12 @@ export class LoginComponent {
 
   constructor(private http: HttpClient) {
     ModalMenager.login = this;
+    this.loadingSubscription = LoadingService.loading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+    this.loggingSubscription = LoginService.logged$.subscribe((isLogged:Boolean) => {
+      this.close();
+    });
   }
 
   manage(type: string) {
@@ -42,18 +52,21 @@ export class LoginComponent {
 
   close() {
     this.isVisible = false;
-    console.log("isLogged: ", LoginService.logged);
+    console.log("isLogged: ", LoginService.isLogged);
   }
 
   login() {
     LoginService.login(this.http, this.usernameOrEmail, this.password);
+    LoadingService.show();
   }
 
   register() {
     if (this.password == this.password2) {
       LoginService.register(this.http, this.username, this.email, this.password, this.name);
+      LoadingService.show();
     } else {
       console.log("passwords don't match");
+      LoadingService.hide();
     }
   }
 }

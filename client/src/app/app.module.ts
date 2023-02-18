@@ -8,13 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LoginComponent } from './modals/login/login.component';
 import { FormsModule } from '@angular/forms';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ToolbarComponent,
-    LoginComponent
+    LoginComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

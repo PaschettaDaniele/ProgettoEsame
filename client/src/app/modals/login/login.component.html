@@ -37,7 +37,10 @@
 
       <div class="modal-footer">
 
-        <button type="button" id="btnConfirm" (click)="isRegistration ? register() : login()" class="btn">Done</button>
+        <button type="button" id="btnConfirm" (click)="isRegistration ? register() : login()" class="btn">
+          <app-loading *ngIf="isLoading"></app-loading>
+          {{isLoading ? "" :  "Done"}}
+        </button>
 
         <div class="row" style="width: 100%; border-top: 1px solid #dee2e6;">
 
