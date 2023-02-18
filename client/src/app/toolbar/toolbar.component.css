@@ -108,6 +108,7 @@
   border-radius: 10px;
   background-color: #fff;
   overflow: hidden;
+  z-index: 99;
 }
 
 .option {
@@ -124,6 +125,7 @@
 
 .option:hover {
   background-color: var(--primary-color);
+  color: #555;
 }
 
 @media screen and (max-width: 1000px) {
