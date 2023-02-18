@@ -86,9 +86,9 @@ app.post(
       .connect()
       .then((client: MongoClient) => {
         const collection = client.db(DBNAME).collection("users");
-        let regex = new RegExp(`^${req.body.username}$`, "i");
+        let regex = new RegExp(`^${req.body.usernameOrEmail}$`, "i");
         collection
-          .findOne({ username: regex })
+          .findOne({ $or: [{ username: regex }, { email: regex }] })
           .then((dbUser: any) => {
             if (!dbUser) {
               res.status(401); // user o password non validi
@@ -276,6 +276,35 @@ app.post("/api/placesByUser", function (req: any, res: any, next: NextFunction) 
     });
 });
 
+app.post("/api/register", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("users");
+  collection.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] }).then((result: any) => {
+    if (result) {
+      res.status(400).send("Email o username già esistenti");
+    }
+    else {
+      let passwordHash = bcrypt.hashSync(req.body.password, 10);
+      let user = {
+        username: req.body.username,
+        email: req.body.email,
+        password: passwordHash,
+        role: "user",
+        name: req.body.name,
+        active: true
+      };
+      collection.insertOne(user)
+        .then((result: any) => {
+          res.send({ ris: "ok" });
+        })
+        .catch((err: any) => {
+          res.status(500).send("Errore query " + err.message);
+        })
+        .finally(() => {
+          req["connessione"].close();
+        });
+    }
+  });
+});
 
 /* ********************** (Sezione 4) DEFAULT ROUTE  ************************* */
 // Default route

@@ -5,14 +5,19 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class LoginService {
+  static logged: boolean = false;
+
   constructor(private http: HttpClient) { }
-  static login(http: HttpClient,usernameOrEmail: string, password: string) {
+  static login(http: HttpClient, usernameOrEmail: string, password: string) {
     return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }).subscribe(data => {
       console.log(data);
+      if (data.ris == "ok") {
+        LoginService.logged = true;
+      }
     });
   }
-  static register(http: HttpClient, username: string, email: string, password: string, password2: string) {
-    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password}).subscribe(data => {
+  static register(http: HttpClient, username: string, email: string, password: string, name: string) {
+    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password }).subscribe(data => {
       console.log(data);
     });
   }

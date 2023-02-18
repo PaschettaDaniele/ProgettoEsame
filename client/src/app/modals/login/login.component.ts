@@ -13,7 +13,17 @@ export class LoginComponent {
   isVisible: boolean = false;
   isRegistration: boolean = false;
 
-  constructor(private http : HttpClient) {
+  // for login
+  usernameOrEmail: string = "Admin";
+  password: string = "admin";
+
+  // for registration
+  username: string = "";
+  name: string = "";
+  email: string = "";
+  password2: string = "";
+
+  constructor(private http: HttpClient) {
     ModalMenager.login = this;
   }
 
@@ -32,19 +42,18 @@ export class LoginComponent {
 
   close() {
     this.isVisible = false;
+    console.log("isLogged: ", LoginService.logged);
   }
 
   login() {
-    let usernameOrEmail;
-    let password;
-    LoginService.login(this.http, "usernameOrEmail", "password");
+    LoginService.login(this.http, this.usernameOrEmail, this.password);
   }
 
   register() {
-    let username;
-    let email;
-    let password;
-    let password2;
-    LoginService.register(this.http, "username.value", "email.value", "password.value", "password2.value");
+    if (this.password == this.password2) {
+      LoginService.register(this.http, this.username, this.email, this.password, this.name);
+    } else {
+      console.log("passwords don't match");
+    }
   }
 }

@@ -19,17 +19,17 @@
 
         <div class="row" *ngIf="isRegistration">
           <!-- Register -->
-          <input type="text" class="form-control" placeholder="Username">
-          <input type="text" class="form-control" placeholder="Name and Surname">
-          <input type="text" class="form-control" placeholder="Email">
-          <input type="password" class="form-control" placeholder="Password">
-          <input type="password" class="form-control" placeholder="Confirm Password">
+          <input type="text" class="form-control" placeholder="Username" [(ngModel)]="username">
+          <input type="text" class="form-control" placeholder="Name and Surname" [(ngModel)]="name">
+          <input type="text" class="form-control" placeholder="Email" [(ngModel)]="email">
+          <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password">
+          <input type="password" class="form-control" placeholder="Confirm Password" [(ngModel)]="password2">
         </div>
 
         <div class="row" *ngIf="!isRegistration">
           <!-- Login -->
-            <input type="text" class="form-control" placeholder="Email or Username">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="text" class="form-control" placeholder="Email or Username" [(ngModel)]="usernameOrEmail">
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password">
         </div>
 
       </div>
