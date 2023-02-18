@@ -212,6 +212,21 @@ app.use("/api/", function (req: any, res: any, next: NextFunction) {
     });
 });
 
+// open the connection also for the api-token routes
+app.use("/api-token/", function (req: any, res: any, next: NextFunction) {
+  let connection = new MongoClient(CONNECTION_STRING as string);
+  connection
+    .connect()
+    .then((client: any) => {
+      req["connessione"] = client;
+      next();
+    })
+    .catch((err: any) => {
+      let msg = "Errore di connessione al db";
+      res.status(503).send(msg);
+    });
+});
+
 /* ********************* (Sezione 3) USER ROUTES  ************************** */
 
 app.get("/api/places", function (req: any, res: any, next: NextFunction) {
@@ -230,11 +245,43 @@ app.get("/api/places", function (req: any, res: any, next: NextFunction) {
     });
 });
 
+app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  collection
+    .insertOne(req.body)
+    .then((result: any) => {
+      res.send({ ris: "ok" });
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
+app.post("/api/placesByUser", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  collection
+    .find({ owner: req.body.userId })
+    .toArray()
+    .then((places: any) => {
+      res.send(places);
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
+
 /* ********************** (Sezione 4) DEFAULT ROUTE  ************************* */
 // Default route
 app.use("/", function (req: any, res: any, next: NextFunction) {
   res.status(404);
-  if (req.originalUrl.startsWith("/api/")) {
+  if (req.originalUrl.startsWith("/api/") || req.originalUrl.startsWith("/api-token/")) {
     res.send("Risorsa non trovata");
     req["connessione"].close();
   } else res.send(paginaErrore);
