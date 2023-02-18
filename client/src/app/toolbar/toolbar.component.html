@@ -36,12 +36,22 @@
           </svg>
       </a>
       <div id="options" *ngIf="options">
-        <a class="option" (click)="onClickLogin('registration')">
-          <span>register</span>
-        </a>
-        <a class="option" (click)="onClickLogin('login')">
-          <span>login</span>
-        </a>
+        <div *ngIf="!logged">
+          <a class="option" (click)="onClickLogin('registration')">
+            <span>register</span>
+          </a>
+          <a class="option" (click)="onClickLogin('login')">
+            <span>login</span>
+          </a>
+        </div>
+        <div *ngIf="logged">
+          <a class="option">
+            <span>profile</span>
+          </a>
+          <a class="option" (click)="logout()">
+            <span>logout</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

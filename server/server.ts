@@ -111,7 +111,7 @@ app.post(
                     } else {
                       let token = createToken(dbUser);
                       writeCookie(res, token);
-                      res.send({ ris: "ok" });
+                      res.send({ ris: "ok", token });
                     }
                   }
                 }
@@ -157,7 +157,7 @@ function createToken(user: any) {
 
 // 8. gestione Logout
 app.use("/api/logout", function (req: any, res, next) {
-  let token = `token='';Max-age=-1;Path=/;HttpOnly=true`;
+  let token = `token='';Max-age=-1;Path=/;`//HttpOnly=true`;
   res.setHeader('set-cookie', token);
   res.send({ ris: "ok" });
 })
