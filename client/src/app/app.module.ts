@@ -10,6 +10,7 @@ import { LoginComponent } from './modals/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from './globalComponents/loading/loading.component';
 import { MarketplaceComponent } from './pages/marketplace/marketplace.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MarketplaceComponent } from './pages/marketplace/marketplace.component'
     ToolbarComponent,
     LoginComponent,
     LoadingComponent,
-    MarketplaceComponent
+    MarketplaceComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

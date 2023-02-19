@@ -6,6 +6,7 @@ export class ModalMenager {
   static login: LoginComponent;
   constructor() { }
 
+  //#region Login modal
   static openLogin(type: string) {
     this.login.open(type);
   }
@@ -13,4 +14,5 @@ export class ModalMenager {
   static closeLogin() {
     this.login.close();
   }
+  //#endregion
 }
