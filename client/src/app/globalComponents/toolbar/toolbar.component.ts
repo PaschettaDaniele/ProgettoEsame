@@ -1,6 +1,6 @@
 import { Component, Output } from '@angular/core';
-import { ModalMenager } from '../utils/modalsMenager';
-import { LoginService } from '../utils/loginService.service';
+import { ModalMenager } from '../../utils/modalsMenager';
+import { LoginService } from '../../utils/loginService.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

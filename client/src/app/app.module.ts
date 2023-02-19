@@ -4,11 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ToolbarComponent } from './globalComponents/toolbar/toolbar.component';
 import { LoginComponent } from './modals/login/login.component';
 import { FormsModule } from '@angular/forms';
-import { LoadingComponent } from './loading/loading.component';
+import { LoadingComponent } from './globalComponents/loading/loading.component';
+import { MarketplaceComponent } from './pages/marketplace/marketplace.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LoadingComponent } from './loading/loading.component';
     HomeComponent,
     ToolbarComponent,
     LoginComponent,
-    LoadingComponent
+    LoadingComponent,
+    MarketplaceComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent } from './globalComponents/toolbar/toolbar.component';
 import { LoginComponent } from './modals/login/login.component';
 import { LoginService } from './utils/loginService.service';
 

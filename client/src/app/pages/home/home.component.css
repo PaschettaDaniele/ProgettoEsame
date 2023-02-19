@@ -62,17 +62,18 @@
   align-items: start;
   justify-content: space-around;
   transition: all .3s;
+  position: relative;
 }
 
 .role-box > p {
   margin-right: 30px;
   margin-left: auto;
-  transition: margin-left 1s;
+  transition: font-size .2s;
 }
 
 .role-box > h3 {
   margin-left: 20px;
-  transition: font-size 1s ease-out;
+  transition: margin-left .3s ease-out;
 }
 
 .role-box:hover {
@@ -83,6 +84,27 @@
 
 .role-box:hover > p {
   font-size: 20px;
+}
+
+.role-box > p::after {
+  content: '';
+  position: relative;
+  display: block;
+  transition: width .3s ease-out;
+  width: 50px;
+  height: 1px;
+  background-color: #000;
+}
+
+.role-box:hover > p::after {
+  content: '';
+  width: 100%;
+  background-color: #fff;
+}
+
+.role-box:hover > h3::before {
+  content: ">";
+  margin-right: 10px;
 }
 
 .role-box:hover > h3 {
