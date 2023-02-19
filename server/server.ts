@@ -2,6 +2,7 @@
 
 // import
 import http from "http";
+import https from "https";
 import fs from "fs";
 import express from "express"; // @types/express
 import { Request, Response, NextFunction } from "express";
@@ -16,6 +17,12 @@ import jwt from "jsonwebtoken";
 // config
 const app = express();
 const HTTP_PORT = process.env.PORT || 1337;
+const HTTPS_PORT = 1338;
+
+const privKey = fs.readFileSync("keys/key.pem", "utf8");
+const certificate = fs.readFileSync("keys/cert.crt", "utf8");
+const credentials = { "key": privKey, "cert": certificate };
+
 dotenv.config({ path: ".env" });
 const DBNAME = "affittoEsubaffitto";
 const CONNECTION_STRING = process.env.connectionString;
@@ -26,15 +33,19 @@ const corsOptions = {
   },
   credentials: true,
 };
-const privateKey = fs.readFileSync("keys/key.pem", "utf8");
 const DURATA_TOKEN = 60 * 60 * 24 * 3; // 60sec * 60min * 24h * 3 giorni
 
 // ***************************** Avvio ****************************************
-const httpServer = http.createServer(app);
-httpServer.listen(HTTP_PORT, function () {
+let httpServer = http.createServer(app);
+httpServer.listen(HTTP_PORT, () => {
   init();
-  console.log("Server HTTP in ascolto sulla porta " + HTTP_PORT);
 });
+
+let httpsServer = https.createServer(credentials, app);
+httpsServer.listen(HTTPS_PORT, function () {
+  console.log("Server in ascolto sulle porte HTTP:" + HTTP_PORT + ", HTTPS:" + HTTPS_PORT);
+});
+
 let paginaErrore = "";
 function init() {
   fs.readFile("./static/error.html", function (err, data) {
@@ -111,7 +122,7 @@ app.post(
                     } else {
                       let token = createToken(dbUser);
                       writeCookie(res, token);
-                      res.send({ ris: "ok", token });
+                      res.send({ ris: "ok" });
                     }
                   }
                 }
@@ -150,14 +161,14 @@ function createToken(user: any) {
     _id: user._id,
     username: user.username,
   };
-  let token = jwt.sign(payload, privateKey);
+  let token = jwt.sign(payload, privKey);
   console.log("Creato nuovo token " + token);
   return token;
 }
 
 // 8. gestione Logout
 app.use("/api/logout", function (req: any, res, next) {
-  let token = `token='';Max-age=-1;Path=/;`//HttpOnly=true`;
+  let token = `token='';Max-age=-1;Path=/;HttpOnly=true`;
   res.setHeader('set-cookie', token);
   res.send({ ris: "ok" });
 })
@@ -169,7 +180,7 @@ app.use("/api-token", function (req: any, res, next) {
     res.status(403);
     res.send("Token mancante");
   } else {
-    jwt.verify(token, privateKey, (err: any, payload: any) => {
+    jwt.verify(token, privKey, (err: any, payload: any) => {
       if (err) {
         res.status(403);
         res.send("Token scaduto o corrotto");
@@ -187,12 +198,14 @@ function readCookie(req: Request): string {
   let token = '';
   if (req.headers.cookie) {
     let cookie = req.headers.cookie.split(';');
+
     let i = 0;
-
     do {
-      token = cookie[i++].split("=")[1];
-
-    } while (cookie[i - 1].split("=")[0] != 'token');
+      if (cookie[i].trimStart().split("=")[0] == 'token') {
+        token = cookie[i].split("=")[1];
+      }
+      i++;
+    } while (cookie[i - 1].trimStart().split("=")[0] != 'token');
   }
   return token;
 }
@@ -228,6 +241,10 @@ app.use("/api-token/", function (req: any, res: any, next: NextFunction) {
 });
 
 /* ********************* (Sezione 3) USER ROUTES  ************************** */
+
+app.post("/api-token/checkToken", function (req: Request, res: Response, next: NextFunction) {
+  res.send({ ris: "ok" });
+});
 
 app.get("/api/places", function (req: any, res: any, next: NextFunction) {
   const collection = req["connessione"].db(DBNAME).collection("places");

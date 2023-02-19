@@ -16,9 +16,11 @@ export class LoginService {
     return this.loggedSubject.asObservable();
   }
 
-  static checkLogin(){
-    this.loggedSubject.next(localStorage.getItem('token') ? true : false);
-    this.isLogged = localStorage.getItem('token') ? true : false;
+  static checkLogin(http: HttpClient) {
+    return http.post<any>(`http://localhost:1337/api-token/checkToken`, {}).subscribe(data => {
+      LoginService.isLogged = (data.ris == "ok");
+      LoginService.loggedSubject.next(LoginService.isLogged);
+    });
   }
 
   //#region Login service
