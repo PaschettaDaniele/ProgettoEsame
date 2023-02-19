@@ -13,7 +13,7 @@ export class ProfileService{
   constructor(private http: HttpClient) { }
 
   public static getProfile(http: HttpClient) {
-    return http.get<any>(`http://localhost:1337/api/profile`).subscribe({
+    return http.get<any>(`http://localhost:1337/api-token/profile`, {withCredentials: true}).subscribe({
       next : (data) => this.getProfileSuccess(data),
       error: (error) => this.getProfileError(error),
     });

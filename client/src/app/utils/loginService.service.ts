@@ -23,7 +23,7 @@ export class LoginService {
 
   //#region Login service
   static login(http: HttpClient, usernameOrEmail: string, password: string) {
-    return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }).subscribe({
+    return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }, {withCredentials: true}).subscribe({
       next : (data) => this.loginSuccess(data),
       error: (error) => this.loginError(error),
     });
@@ -56,7 +56,7 @@ export class LoginService {
 
   //#region Register service
   static register(http: HttpClient, username: string, email: string, password: string, name: string) {
-    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password }).subscribe(data => {
+    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password }, {withCredentials: true}).subscribe(data => {
       console.log(data);
     });
   }
@@ -64,7 +64,7 @@ export class LoginService {
 
   //#region Logout service
   static logout(http: HttpClient) {
-    return http.post<any>(`http://localhost:1337/api/logout`, {}).subscribe({
+    return http.post<any>(`http://localhost:1337/api/logout`, {}, {withCredentials: true}).subscribe({
       next : (data) => this.logoutSuccess(data),
       error: (error) => this.logoutError(error),
     });

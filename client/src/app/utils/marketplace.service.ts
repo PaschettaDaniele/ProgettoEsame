@@ -28,7 +28,7 @@ export class MarketplaceService {
   }
 
   public static async getPlaces(http: HttpClient) {
-    return await http.get<any>(`http://localhost:1337/api/places`).subscribe({
+    return await http.get<any>(`http://localhost:1337/api/places`, {withCredentials: true}).subscribe({
       next : (data) => this.getPlacesSuccess(data),
       error: (error) => this.getPlacesError(error),
     });
