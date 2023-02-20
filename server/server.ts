@@ -26,7 +26,8 @@ const credentials = { "key": privKey, "cert": certificate };
 dotenv.config({ path: ".env" });
 const DBNAME = "affittoEsubaffitto";
 const CONNECTION_STRING = process.env.connectionString;
-// cloudinary.v2.config(JSON.parse(process.env.cloudinary as string));
+cloudinary.v2.config(JSON.parse(process.env.cloudinary as string));
+
 const corsOptions = {
   origin: function (origin: any, callback: any) {
     return callback(null, true);
@@ -336,6 +337,29 @@ app.post("/api/register", function (req: any, res: any, next: NextFunction) {
         });
     }
   });
+});
+
+app.post("/api-token/base64Cloudinary", (req: any, res: any, next: any) => {
+  if (!req.body.placeId || !req.body.img) {
+    res.status(404);
+    res.send("File or placeId is missed");
+  } else {
+    cloudinary.v2.uploader
+      .upload(req.body.img, { folder: "progettoEsame" })
+      .then((result: UploadApiResponse) => {
+        let collection = req["connessione"].db(DBNAME).collection("places");
+        // insert the url of the image in the db, in an array of images of the place
+        collection
+          .updateOne({ _id: new ObjectId(req.body.placeId) }, { $push: { images: result.secure_url } })
+          .then((result: any) => {
+            res.send({ ris: "ok" });
+          })
+      })
+      .catch((err: any) => {
+        res.status(500);
+        res.send("Error upload file to Cloudinary. Error: " + err.message);
+      });
+  }
 });
 
 /* ********************** (Sezione 4) DEFAULT ROUTE  ************************* */
