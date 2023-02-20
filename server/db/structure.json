@@ -1,0 +1,41 @@
+{
+    "users": [
+        {
+            "_id": "5c9b5b5b5b5b5b5b5b5b5b5b",
+            "username": "Admin",
+            "name": "Admin",
+            "email": "",
+            "password": "admin",
+            "role": "admin",
+            "active": true
+        }
+    ],
+    "places": [
+        {
+            "_id": "5c9b5b5b5b5b5b5b5b5b5b5b",
+            "name": "Appartamento 1",
+            "type": "apartment",
+            "description": "Description 1",
+            "address": "Address 1",
+            "city": "City 1",
+            "country": "Italia",
+            "latitude": 0,
+            "longitude": 0,
+            "owner": "5c9b5b5b5b5b5b5b5b5b5b5b",
+            "active": true
+        },
+        {
+            "_id": "5c9b5b5b5b5b5b5b5b5b5b5b",
+            "name": "Stanza 1",
+            "type": "room",
+            "description": "Description 2",
+            "address": "Address 2",
+            "city": "City 2",
+            "country": "Country 2",
+            "latitude": 0,
+            "longitude": 0,
+            "owner": "5c9b5b5b5b5b5b5b5b5b5b5b",
+            "active": true
+        }
+    ]
+}
