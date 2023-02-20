@@ -283,7 +283,13 @@ app.post("/api-token/profile", function (req: any, res: any, next: NextFunction)
   collection
     .findOne({ $or: [{ username: req.body.usernameOrEmail }, { email: req.body.usernameOrEmail }] })
     .then((user: any) => {
-      res.send({ profile: user, ris: "ok" });
+      if(user){
+        console.log(user);
+        delete user.password;
+        res.send({ profile: user, ris: "ok" }); 
+      }else{
+        res.send({ ris: '', error: 'User not found'});
+      }
     })
     .catch((err: any) => {
       res.status(500).send("Errore query " + err.message);

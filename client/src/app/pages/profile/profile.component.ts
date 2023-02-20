@@ -8,11 +8,20 @@ import { ProfileService } from 'src/app/utils/profile.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  profile: {};
-  email: string = "";
+  profile: any;
+  profileSubscription: any;
+  email: string | null = "";
 
   constructor(private http: HttpClient) {
-    this.profile = ProfileService.getProfile(http, this.email);
-    console.log(this.profile);
+    this.email = localStorage.getItem('usernameOrEmail');
+    ProfileService.getProfile(this.http, this.email);
+    this.profileSubscription = ProfileService.profile$.subscribe((profile: any) => {
+      this.profile = profile;
+      console.log(this.profile);
+    });
+  }
+
+  editProfile() {
+
   }
 }

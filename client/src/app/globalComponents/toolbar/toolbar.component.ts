@@ -34,6 +34,7 @@ export class ToolbarComponent {
     this.logged = false;
     LoginService.logout(this.http);
     this.viewOptions();
+    location.href = '/';
   }
 }
 

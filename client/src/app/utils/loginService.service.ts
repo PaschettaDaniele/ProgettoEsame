@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from './loading.service';
 import { Subject } from 'rxjs';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,18 +27,18 @@ export class LoginService {
   //#region Login service
   static login(http: HttpClient, usernameOrEmail: string, password: string) {
     return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }, { withCredentials: true }).subscribe({
-      next: (data) => this.loginSuccess(data),
+      next: (data) => this.loginSuccess(data, usernameOrEmail),
       error: (error) => this.loginError(error),
     });
   }
 
-  private static loginSuccess(data: any) {
+  private static loginSuccess(data: any, usernameOrEmail: string) {
     console.log(data);
     if (data.ris == "ok") {
       LoginService.isLogged = true;
       LoadingService.hide();
       LoginService.loggedSubject.next(true);
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('usernameOrEmail', usernameOrEmail);
     }
     else {
       LoginService.isLogged = false;
@@ -76,6 +77,8 @@ export class LoginService {
     console.log(data);
     LoginService.isLogged = false;
     LoginService.loggedSubject.next(false);
+    ProfileService.profile = {};
+    localStorage.removeItem('usernameOrEmail');
   }
 
   private static logoutError(error: any) {
