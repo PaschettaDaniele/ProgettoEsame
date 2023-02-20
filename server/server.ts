@@ -277,10 +277,19 @@ app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction
     });
 });
 
-app.get("/api-token/profile", function (req: any, res: any, next: NextFunction) {
-  let cookie = readCookie(req);
-  // TODO da completare, ora non worka per il fattore cookies
-  res.send({ ris: "ok", cookie }).status(200);
+app.post("/api-token/profile", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("users");
+  collection
+    .findOne({ $or: [{ username: req.body.usernameOrEmail }, { email: req.body.usernameOrEmail }] })
+    .then((user: any) => {
+      res.send({ profile: user, ris: "ok" });
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
 });
 
 app.post("/api/placesByUser", function (req: any, res: any, next: NextFunction) {

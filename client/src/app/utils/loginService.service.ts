@@ -17,7 +17,7 @@ export class LoginService {
   }
 
   static checkLogin(http: HttpClient) {
-    return http.post<any>(`http://localhost:1337/api-token/checkToken`, {}).subscribe(data => {
+    return http.post<any>(`http://localhost:1337/api-token/checkToken`, {}, { withCredentials: true }).subscribe(data => {
       LoginService.isLogged = (data.ris == "ok");
       LoginService.loggedSubject.next(LoginService.isLogged);
     });
@@ -25,13 +25,13 @@ export class LoginService {
 
   //#region Login service
   static login(http: HttpClient, usernameOrEmail: string, password: string) {
-    return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }, {withCredentials: true}).subscribe({
-      next : (data) => this.loginSuccess(data),
+    return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }, { withCredentials: true }).subscribe({
+      next: (data) => this.loginSuccess(data),
       error: (error) => this.loginError(error),
     });
   }
 
-  private static loginSuccess(data : any){
+  private static loginSuccess(data: any) {
     console.log(data);
     if (data.ris == "ok") {
       LoginService.isLogged = true;
@@ -39,7 +39,7 @@ export class LoginService {
       LoginService.loggedSubject.next(true);
       localStorage.setItem('token', data.token);
     }
-    else{
+    else {
       LoginService.isLogged = false;
       LoadingService.hide();
       LoginService.loggedSubject.next(false);
@@ -47,7 +47,7 @@ export class LoginService {
     }
   }
 
-  private static loginError(error : any){
+  private static loginError(error: any) {
     console.log(error);
     LoginService.isLogged = false;
     LoadingService.hide();
@@ -58,7 +58,7 @@ export class LoginService {
 
   //#region Register service
   static register(http: HttpClient, username: string, email: string, password: string, name: string) {
-    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password }, {withCredentials: true}).subscribe(data => {
+    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password }, { withCredentials: true }).subscribe(data => {
       console.log(data);
     });
   }
@@ -66,19 +66,19 @@ export class LoginService {
 
   //#region Logout service
   static logout(http: HttpClient) {
-    return http.post<any>(`http://localhost:1337/api/logout`, {}, {withCredentials: true}).subscribe({
-      next : (data) => this.logoutSuccess(data),
+    return http.post<any>(`http://localhost:1337/api/logout`, {}, { withCredentials: true }).subscribe({
+      next: (data) => this.logoutSuccess(data),
       error: (error) => this.logoutError(error),
     });
   }
 
-  private static logoutSuccess(data : any) {
+  private static logoutSuccess(data: any) {
     console.log(data);
     LoginService.isLogged = false;
     LoginService.loggedSubject.next(false);
   }
 
-  private static logoutError(error : any) {
+  private static logoutError(error: any) {
     console.log(error);
     alert('Error on logout, user still logged in');
   }

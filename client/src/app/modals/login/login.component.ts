@@ -18,8 +18,8 @@ export class LoginComponent {
   loggingSubscription: any = false;
 
   // for login
-  usernameOrEmail: string = "Admin";
-  password: string = "admin";
+  usernameOrEmail: string = "";
+  password: string = "";
 
   // for registration
   username: string = "";
@@ -32,7 +32,7 @@ export class LoginComponent {
     this.loadingSubscription = LoadingService.loading$.subscribe(isLoading => {
       this.isLoading = isLoading;
     });
-    this.loggingSubscription = LoginService.logged$.subscribe((isLogged:Boolean) => {
+    this.loggingSubscription = LoginService.logged$.subscribe((isLogged: Boolean) => {
       this.close();
     });
   }

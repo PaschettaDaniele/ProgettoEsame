@@ -9,9 +9,10 @@ import { ProfileService } from 'src/app/utils/profile.service';
 })
 export class ProfileComponent {
   profile: {};
+  email: string = "";
 
   constructor(private http: HttpClient) {
-    this.profile = ProfileService.getProfile(http);
+    this.profile = ProfileService.getProfile(http, this.email);
     console.log(this.profile);
   }
 }
