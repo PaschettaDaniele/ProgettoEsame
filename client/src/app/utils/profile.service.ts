@@ -17,6 +17,7 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
+  //#region  getProfile
   public static getProfile(http: HttpClient, usernameOrEmail: string | null) {
     return http.post<any>(`http://localhost:1337/api-token/profile`, { usernameOrEmail }, { withCredentials: true }).subscribe({
       next: (data) => this.getProfileSuccess(data),
@@ -37,5 +38,20 @@ export class ProfileService {
     alert('Autentication error');
     ModalMenager.openLogin('login');
   }
+  //#endregion
 
+  //#region updateProfile
+
+  public static updateProfile(http: HttpClient, profile: any) {
+    return http.post<any>(`http://localhost:1337/api-token/update-profile`, profile, { withCredentials: true }).subscribe({
+      next: (data) => this.updateProfileSuccess(data),
+      error: (error) => this.updateProfileError(error),
+    });
+  }
+
+  private static updateProfileSuccess(data: any) {}
+
+  private static updateProfileError(error: any) {}
+
+  // #endregion
 }

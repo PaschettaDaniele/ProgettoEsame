@@ -1,1 +1,51 @@
-<p>profile works!</p>
+<div class="padding" *ngIf="isLoading"></div>
+
+<app-loading [width]="100" *ngIf="isLoading"></app-loading>
+
+<div class="container top" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-9">
+      <p>Hello <span>{{profile?.username}}</span>, <br> This is the profile page where you can edit your profile.</p>
+    </div>
+    <div class="col-md-3">
+      <a class="btn btnEdit" (click)="editProfile()">Edit Profile</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="row profileInfo" *ngIf="!isLoading && !isEditing" >
+  <div class="col-md-8">
+    <div class="infoBox">
+      <h5 class="name">Name: {{profile?.name}}</h5>
+      <h6 class="username">Username: {{profile?.username}}</h6>
+      <p>Email: {{profile?.email}}</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="infoBox" style="background-color: rgba(127,255,212,.3);">
+      <p class="role">Role: {{profile?.role}}</p>
+      <a class="btn btnBecameSeller" *ngIf="profile?.role != 'seller'">Became a seller!</a>
+    </div>
+  </div>
+</div>
+
+<div class="row profileInfo edit" *ngIf="!isLoading && isEditing">
+  <div class="col-md-12">
+    <div class="infoBox edit">
+      <div class="row editRow">
+        <span class="name">Name:</span>
+        <input type="text" [(ngModel)]="nameEdit" [value]="nameEdit">
+      </div>
+      <div class="row editRow">
+        <span class="username">Username:</span>
+        <input type="text" [(ngModel)]="usernameEdit" [value]="usernameEdit">
+      </div>
+      <div class="row editRow">
+        <span class="email">Email:</span>
+        <input type="text" [(ngModel)]="emailEdit" [value]="emailEdit">
+      </div>
+      <a class="btn btnBecameSeller" (click)="updateData()">Done</a>
+    </div>
+  </div>
+</div>

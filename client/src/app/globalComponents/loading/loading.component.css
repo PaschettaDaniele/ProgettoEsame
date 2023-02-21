@@ -6,8 +6,6 @@
 }
 
 .spinner {
-  width: 25px;
-  height: 25px;
   border-radius: 50%;
   border: 5px solid #555;
   border-top-color: var(--primary-color);

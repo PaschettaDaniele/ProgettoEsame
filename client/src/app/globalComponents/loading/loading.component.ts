@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../../utils/loading.service';
 
@@ -8,6 +8,7 @@ import { LoadingService } from '../../utils/loading.service';
   styleUrls: ['./loading.component.css']
 })
 export class LoadingComponent implements OnDestroy {
+  @Input() public width: number = 25;
   isLoading = false;
   private loadingSubscription: Subscription;
 
