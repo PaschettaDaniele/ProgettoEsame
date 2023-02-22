@@ -77,7 +77,6 @@
 
 .btnSearch {
   color: #fff;
-  border: 1px solid #5e5e5e;
   outline: none;
   border-radius: 50px;
   transition: 0.2s;
@@ -126,6 +125,20 @@
 .option:hover {
   background-color: var(--primary-color);
   color: #555;
+}
+
+.option > .profile {
+  border: 1px solid #000;
+    border-radius: 50px;
+    aspect-ratio: 1;
+    height: 15px;
+    margin-right: 5px;
+    display: flex;
+}
+
+.option > .logout {
+  margin-right: 5px;
+  display: flex;
 }
 
 @media screen and (max-width: 1000px) {

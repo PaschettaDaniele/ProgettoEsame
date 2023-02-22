@@ -333,6 +333,8 @@ app.post("/api/register", function (req: any, res: any, next: NextFunction) {
       };
       collection.insertOne(user)
         .then((result: any) => {
+          let token = createToken(user);
+          writeCookie(res, token);
           res.send({ ris: "ok" });
         })
         .catch((err: any) => {

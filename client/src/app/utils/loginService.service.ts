@@ -59,10 +59,25 @@ export class LoginService {
 
   //#region Register service
   static register(http: HttpClient, username: string, email: string, password: string, name: string) {
-    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password }, { withCredentials: true }).subscribe(data => {
-      console.log(data);
+    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password, name }, { withCredentials: true }).subscribe({
+      next: data => this.registerSuccess(data, username),
+      error: e => this.registerError(e)
     });
   }
+
+  private static registerSuccess(data: any, username: string) {
+    LoginService.isLogged = true;
+    LoadingService.hide();
+    LoginService.loggedSubject.next(true);
+    localStorage.setItem('usernameOrEmail', username)
+  }
+
+  private static registerError(e: any) {
+    LoginService.isLogged = false;
+    LoginService.loggedSubject.next(false);
+    alert('Registration error');
+  }
+
   //#endregion
 
   //#region Logout service
