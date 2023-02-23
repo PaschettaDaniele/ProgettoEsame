@@ -30,7 +30,6 @@ export class ProfileComponent {
       this.emailEdit = profile.email;
       LoadingService.hide();
       this.isLoading = false;
-      console.log(this.profile);
     });
   }
 
@@ -43,5 +42,22 @@ export class ProfileComponent {
     this.profile.name = this.nameEdit;
     this.profile.username = this.usernameEdit;
     this.profile.email = this.emailEdit;
+    ProfileService.updateProfile(this.http, this.profile);
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      // get the file in base64
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.profile.image = reader.result;
+      }
+    }
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
   }
 }

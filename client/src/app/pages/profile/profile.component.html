@@ -24,8 +24,7 @@
   </div>
   <div class="col-md-4">
     <div class="infoBox" style="background-color: rgba(127,255,212,.3);">
-      <p class="role">Role: {{profile?.role}}</p>
-      <a class="btn btnBecameSeller" *ngIf="profile?.role != 'seller'">Became a seller!</a>
+      <img [src]="profile?.img ? profile?.img : 'https://upload.wikimedia.org/wikipedia/commons/2/24/Missing_avatar.svg'" alt="Avatar" class="avatar">
     </div>
   </div>
 </div>
@@ -45,7 +44,22 @@
         <span class="email">Email:</span>
         <input type="text" [(ngModel)]="emailEdit" [value]="emailEdit">
       </div>
-      <a class="btn btnBecameSeller" (click)="updateData()">Done</a>
+      <div class="row editRow">
+        <div class="col-md-9">
+          <p class="image">Avatar image:</p>
+          <label for="file-input" class="custom-image-button btn btnBecameSeller">
+            <i class="fa fa-upload"></i> Upload Image
+          </label>
+          <input type="file" id="file-input" (change)="onFileSelected($event)">
+        </div>
+        <div class="col-md-3 imageImg">
+          <img [src]="profile?.img ? profile?.img : 'https://upload.wikimedia.org/wikipedia/commons/2/24/Missing_avatar.svg'" alt="Avatar" class="avatar">
+        </div>
+      </div>
+      <div class="buttons">
+        <a class="btn btnBecameSeller" (click)="cancelEdit()">Cancel</a>
+        <a class="btn btnBecameSeller" (click)="updateData()">Done</a>
+      </div>
     </div>
   </div>
 </div>

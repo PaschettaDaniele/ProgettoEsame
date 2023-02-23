@@ -299,6 +299,26 @@ app.post("/api-token/profile", function (req: any, res: any, next: NextFunction)
     });
 });
 
+app.post('/api-token/update-profile', function (req: any, res: any, next: NextFunction) {
+  cloudinary.v2.uploader.upload(req.body.img, function (error: any, result: any) {
+    if (error) {
+      res.send({ ris: '', error: 'Error uploading the image' });
+    } else {
+      const collection = req["connessione"].db(DBNAME).collection("users");
+      collection.updateOne(
+        { _id: new ObjectId(req.body.userId) }, 
+        { $set: { name: req.body.name, username: req.body.username, email: req.body.email, img: result.url } })
+      .then((result: any) => {
+        res.send({ ris: "ok" });
+      }).catch((err: any) => {
+        res.status(500).send("Errore query " + err.message);
+      }).finally(() => {
+        req["connessione"].close();
+      });
+    }
+  });
+});
+
 app.post("/api/placesByUser", function (req: any, res: any, next: NextFunction) {
   const collection = req["connessione"].db(DBNAME).collection("places");
   collection
@@ -369,6 +389,7 @@ app.post("/api-token/base64Cloudinary", (req: any, res: any, next: any) => {
       });
   }
 });
+
 
 /* ********************** (Sezione 4) DEFAULT ROUTE  ************************* */
 // Default route

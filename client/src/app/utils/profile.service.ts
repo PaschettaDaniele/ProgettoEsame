@@ -49,9 +49,19 @@ export class ProfileService {
     });
   }
 
-  private static updateProfileSuccess(data: any) {}
+  private static updateProfileSuccess(data: any) {
+    if (data.ris == "ok") {
+      this.profileSubject.next(data.profile);
+      this.profile = data.profile;
+    }
+    else alert(data.error);
+  }
 
-  private static updateProfileError(error: any) {}
+  private static updateProfileError(error: any) {
+    console.log(error);
+    alert('Autentication error');
+    location.reload();
+  }
 
   // #endregion
 }
