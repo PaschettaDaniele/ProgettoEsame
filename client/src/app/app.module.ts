@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from './globalComponents/loading/loading.component';
 import { MarketplaceComponent } from './pages/marketplace/marketplace.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { FooterComponent } from './globalComponents/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     LoadingComponent,
     MarketplaceComponent,
     ProfileComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

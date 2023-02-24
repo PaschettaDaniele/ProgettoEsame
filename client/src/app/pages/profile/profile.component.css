@@ -115,6 +115,7 @@
   margin-right: 0;
   margin-left: 50%;
   transform: translateX(-50%);
+  border-radius: 50px;
 }
 
 .imageImg {
