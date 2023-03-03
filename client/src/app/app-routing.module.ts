@@ -7,10 +7,10 @@ import { MarketplaceComponent } from './pages/marketplace/marketplace.component'
 import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
-  { path: "login", component: LoginComponent },
-  { path: "marketplace", component: MarketplaceComponent},
-  { path: "profile", component: ProfileComponent}
+  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "home", component: HomeComponent },
+  { path: "marketplace", component: MarketplaceComponent },
+  { path: "profile", component: ProfileComponent }
 ];
 
 @NgModule({
