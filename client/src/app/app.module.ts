@@ -12,6 +12,7 @@ import { LoadingComponent } from './globalComponents/loading/loading.component';
 import { MarketplaceComponent } from './pages/marketplace/marketplace.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FooterComponent } from './globalComponents/footer/footer.component';
+import { MarketplaceCardComponent } from './pages/marketplace/marketplace-card/marketplace-card.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FooterComponent } from './globalComponents/footer/footer.component';
     MarketplaceComponent,
     ProfileComponent,
     FooterComponent,
+    MarketplaceCardComponent,
   ],
   imports: [
     BrowserModule,
