@@ -136,9 +136,14 @@
     display: flex;
 }
 
-.option > .logout {
+.option > .logout,
+.option > .home,
+.option > .marketplace,
+.option > .dashboard {
   margin-right: 5px;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 1000px) {

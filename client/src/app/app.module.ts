@@ -12,6 +12,8 @@ import { LoadingComponent } from './globalComponents/loading/loading.component';
 import { MarketplaceComponent } from './pages/marketplace/marketplace.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FooterComponent } from './globalComponents/footer/footer.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardCardComponent } from './pages/dashboard/dashboard-card/dashboard-card.component';
 import { MarketplaceCardComponent } from './pages/marketplace/marketplace-card/marketplace-card.component';
 
 @NgModule({
@@ -24,6 +26,8 @@ import { MarketplaceCardComponent } from './pages/marketplace/marketplace-card/m
     MarketplaceComponent,
     ProfileComponent,
     FooterComponent,
+    DashboardComponent,
+    DashboardCardComponent,
     MarketplaceCardComponent,
   ],
   imports: [

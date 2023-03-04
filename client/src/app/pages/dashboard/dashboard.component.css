@@ -1,0 +1,10 @@
+.roomsRow,
+.apartmentsRow {
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline: 10px;
+}
+
+.placesRow {
+  margin-inline: auto;
+}

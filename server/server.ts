@@ -319,20 +319,32 @@ app.post('/api-token/update-profile', function (req: any, res: any, next: NextFu
   });
 });
 
-app.post("/api/placesByUser", function (req: any, res: any, next: NextFunction) {
-  const collection = req["connessione"].db(DBNAME).collection("places");
+app.post("/api-token/placesByUser", function (req: any, res: any, next: NextFunction) {
+  const usernameOrEmail = req.body.usernameOrEmail;
+  const collection = req["connessione"].db(DBNAME).collection("users");
+  //find user by username or email
   collection
-    .find({ owner: req.body.userId })
-    .toArray()
-    .then((places: any) => {
-      res.send(places);
+    .findOne({ $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }] })
+    .then((user: any) => {
+      if (user) {
+        const collection = req["connessione"].db(DBNAME).collection("places");
+        collection
+          .find({ owner: user._id.toString() })
+          .toArray()
+          .then((places: any) => {
+            res.send({ places: places, ris: "ok" });
+          })
+          .catch((err: any) => {
+            res.status(500).send("Errore query " + err.message);
+          })
+          .finally(() => {
+            req["connessione"].close();
+          });
+      } else res.send({ places: [], ris: "err", error: "user not found" });
     })
     .catch((err: any) => {
       res.status(500).send("Errore query " + err.message);
     })
-    .finally(() => {
-      req["connessione"].close();
-    });
 });
 
 app.post("/api/register", function (req: any, res: any, next: NextFunction) {

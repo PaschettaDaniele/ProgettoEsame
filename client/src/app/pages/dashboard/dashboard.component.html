@@ -1,0 +1,13 @@
+<div class="padding" *ngIf="isLoading"></div>
+<app-loading [width]="100" *ngIf="isLoading"></app-loading>
+
+<div *ngIf="!isLoading">
+  <div class="row placesRow container" *ngIf="places.length">
+    <div class="col-md-6 roomsRow">
+      <app-dashboard-card [place]="room" (choosenPlace)="choosenPlace(room)" *ngFor="let room of rooms"></app-dashboard-card>
+    </div>
+    <div class="col-md-6 apartmentsRow">
+      <app-dashboard-card [place]="apartment" (choosenPlace)="choosenPlace(apartment)" *ngFor="let apartment of apartments"></app-dashboard-card>
+    </div>
+  </div>
+</div>
