@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500&family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   min-height: 100dvh;
 }
@@ -11,11 +12,11 @@ html, body {
 }
 
 :root {
-  --primary-color: #7FFFD4;
+  --primary-color: rgb(127, 255, 212);
+  --primary-color-shadow: rgba(127, 255, 212, 0.176);
 }
 
 .form-control:focus {
   border-color: var(--primary-color) !important;
   box-shadow: 0 0 0 1px var(--primary-color) !important;
 }
-
