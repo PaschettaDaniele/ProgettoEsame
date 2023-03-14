@@ -1,15 +1,3 @@
 <div class="container-marketplace">
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
-  <div class="col-card"><app-marketplace-card></app-marketplace-card></div>
+  <div class="col-card" *ngFor="let card of places"><app-marketplace-card [card] = "card"></app-marketplace-card></div>
 </div>

@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-marketplace-card',
   templateUrl: './marketplace-card.component.html',
   styleUrls: ['./marketplace-card.component.css']
 })
-export class MarketplaceCardComponent {
+export class MarketplaceCardComponent implements OnInit {
   @Input() card!: {
     apartmentType: string,
     owner: string,
@@ -18,6 +18,11 @@ export class MarketplaceCardComponent {
       country: string
     },
     image: string,
-    persons: number,
+    persons: string,
   };
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 }

@@ -23,14 +23,14 @@
 }
 
 .imgDiv {
-  height: 130px;
+  height: 153px;
   padding-left: 0;
   overflow: hidden;
 }
 
 @media screen and (max-width: 856px) {
   .imgDiv {
-    height: 150px;
+    height: 170px;
   }
 }
 
@@ -80,4 +80,14 @@ a:hover {
 .marketCard:hover h3::after {
   content: '';
   width: 65%;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+.cardFooter>p {
+  margin: 0;
 }

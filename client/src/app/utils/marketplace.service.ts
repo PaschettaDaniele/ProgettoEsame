@@ -28,26 +28,31 @@ export class MarketplaceService {
   }
 
   public static async getPlaces(http: HttpClient) {
-    return await http.get<any>(`http://localhost:1337/api/places`, {withCredentials: true}).subscribe({
-      next : (data) => this.getPlacesSuccess(data),
+    return await http.get<any>(`http://localhost:1337/api/places`, { withCredentials: true }).subscribe({
+      next: (data) => this.getPlacesSuccess(data),
       error: (error) => this.getPlacesError(error),
     });
   }
 
-  private static getPlacesSuccess(data : any){
+  private static getPlacesSuccess(data: any) {
     MarketplaceService.places = data;
+    console.log(data);
     [this.rooms, this.houses] = this.separePlaces();
-    console.log({"Rooms" : this.rooms, "Houses" : this.houses});
+    console.log({ "Rooms": this.rooms, "Houses": this.houses });
+
+    MarketplaceService.placesSubject.next(this.places);
+    MarketplaceService.roomsSubject.next(this.rooms);
+    MarketplaceService.housesSubject.next(this.houses);
   }
 
-  private static getPlacesError(error : any){
+  private static getPlacesError(error: any) {
     console.log(error);
   }
 
-  private static separePlaces(){
+  private static separePlaces() {
     let r: any = [];
     let h: any = [];
-    for(const place of MarketplaceService.places){
+    for (const place of MarketplaceService.places) {
       if (place.type == 'apartment') r.push(place);
       else if (place.type == 'room') h.push(place);
     }
