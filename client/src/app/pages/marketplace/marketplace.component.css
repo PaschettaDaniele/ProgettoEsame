@@ -1,8 +1,36 @@
 .container-marketplace {
   padding: 1.5rem;
-  width: 100vdw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .col-card {
-  padding: 0 5px;
+  padding: 10px;
+}
+
+@media screen and (min-width: 1200px) {
+  .col-card {
+    min-width: 370px;
+    width: 33%;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .col-card {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 856px) {
+  .col-card {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .col-card {
+    width: 100%;
+    min-width: none;
+  }
 }

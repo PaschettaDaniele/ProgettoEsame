@@ -28,9 +28,27 @@
   overflow: hidden;
 }
 
+@media screen and (max-width: 856px) {
+  .imgDiv {
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .imgDiv {
+    height: 286px;
+  }
+}
+
 .infoDiv {
   padding-top: 5px;
   padding-left: 0;
+}
+
+@media screen and (max-width: 575px) {
+  .infoDiv {
+    padding-left: 20px;
+  }
 }
 
 .prezzo {
@@ -59,7 +77,7 @@ a:hover {
   background-color: #000;
 }
 
-.infoDiv:hover>h3::after {
+.marketCard:hover h3::after {
   content: '';
   width: 65%;
 }
