@@ -34,7 +34,7 @@
   }
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 576px) {
   .imgDiv {
     height: 286px;
   }
@@ -45,7 +45,7 @@
   padding-left: 0;
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 576px) {
   .infoDiv {
     padding-left: 20px;
   }
