@@ -11,6 +11,7 @@ export class MarketplaceComponent implements OnInit {
   rooms: any;
   houses: any;
   places: any;
+  placesFull: any;
   // cardProva = {
   //   apartmentType: 'Room',
   //   owner: "Mario Rossi",
@@ -34,10 +35,11 @@ export class MarketplaceComponent implements OnInit {
     MarketplaceService.houses$.subscribe((value) => this.houses = value);
     MarketplaceService.rooms$.subscribe((value) => this.rooms = value);
     MarketplaceService.places$.subscribe((value) => {
+      this.placesFull = value;
       this.places = value.map((place: any) => {
         return {
           apartmentType: place.type,
-          owner: place.owner,
+          owner: place.ownerName ? place.ownerName : place.owner,
           price: {
             value: place.price.value,
             currency: place.price.currency

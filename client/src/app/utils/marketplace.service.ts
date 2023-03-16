@@ -29,20 +29,35 @@ export class MarketplaceService {
 
   public static async getPlaces(http: HttpClient) {
     return await http.get<any>(`http://localhost:1337/api/places`, { withCredentials: true }).subscribe({
-      next: (data) => this.getPlacesSuccess(data),
+      next: (data) => this.getPlacesSuccess(http, data),
       error: (error) => this.getPlacesError(error),
     });
   }
 
-  private static getPlacesSuccess(data: any) {
+  private static getPlacesSuccess(http: HttpClient, data: any) {
     MarketplaceService.places = data;
     console.log(data);
     [this.rooms, this.houses] = this.separePlaces();
     console.log({ "Rooms": this.rooms, "Houses": this.houses });
 
-    MarketplaceService.placesSubject.next(this.places);
     MarketplaceService.roomsSubject.next(this.rooms);
     MarketplaceService.housesSubject.next(this.houses);
+
+    let i = 0
+    for (const place of MarketplaceService.places) {
+      this.getOwnerName(http, place.owner, i);
+      i++;
+    }
+  }
+
+  private static async getOwnerName(http: HttpClient, ownerId: string, i: number) {
+    http.post<any>(`http://localhost:1337/api/userById`, { userId: ownerId }, { withCredentials: true }).subscribe({
+      next: (data: any) => {
+        this.places[i].ownerName = data.username;
+        MarketplaceService.placesSubject.next(this.places);
+      },
+      error: (error: any) => { },
+    });
   }
 
   private static getPlacesError(error: any) {

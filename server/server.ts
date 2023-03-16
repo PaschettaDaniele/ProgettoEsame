@@ -283,12 +283,12 @@ app.post("/api-token/profile", function (req: any, res: any, next: NextFunction)
   collection
     .findOne({ $or: [{ username: req.body.usernameOrEmail }, { email: req.body.usernameOrEmail }] })
     .then((user: any) => {
-      if(user){
+      if (user) {
         console.log(user);
         delete user.password;
-        res.send({ profile: user, ris: "ok" }); 
-      }else{
-        res.send({ ris: '', error: 'User not found'});
+        res.send({ profile: user, ris: "ok" });
+      } else {
+        res.send({ ris: '', error: 'User not found' });
       }
     })
     .catch((err: any) => {
@@ -306,18 +306,36 @@ app.post('/api-token/update-profile', function (req: any, res: any, next: NextFu
     } else {
       const collection = req["connessione"].db(DBNAME).collection("users");
       collection.updateOne(
-        { _id: new ObjectId(req.body.userId) }, 
+        { _id: new ObjectId(req.body.userId) },
         { $set: { name: req.body.name, username: req.body.username, email: req.body.email, img: result.url } })
-      .then((result: any) => {
-        res.send({ ris: "ok" });
-      }).catch((err: any) => {
-        res.status(500).send("Errore query " + err.message);
-      }).finally(() => {
-        req["connessione"].close();
-      });
+        .then((result: any) => {
+          res.send({ ris: "ok" });
+        }).catch((err: any) => {
+          res.status(500).send("Errore query " + err.message);
+        }).finally(() => {
+          req["connessione"].close();
+        });
     }
   });
 });
+
+app.post("/api/userById", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("users");
+  collection
+    .find({ _id: new ObjectId(req.body.userId) })
+    .toArray()
+    .then((users: any) => {
+      console.log("user:", users[0])
+      res.send(users[0]);
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
 
 app.post("/api-token/placesByUser", function (req: any, res: any, next: NextFunction) {
   const usernameOrEmail = req.body.usernameOrEmail;

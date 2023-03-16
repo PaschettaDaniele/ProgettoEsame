@@ -20,6 +20,7 @@ export class MarketplaceCardComponent implements OnInit {
     image: string,
     persons: string,
   };
+  @Input() placesFull: any;
 
   constructor() { }
 
