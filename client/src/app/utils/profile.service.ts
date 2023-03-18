@@ -44,15 +44,14 @@ export class ProfileService {
 
   public static updateProfile(http: HttpClient, profile: any) {
     return http.post<any>(`http://localhost:1337/api-token/update-profile`, profile, { withCredentials: true }).subscribe({
-      next: (data) => this.updateProfileSuccess(data),
+      next: (data) => this.updateProfileSuccess(data, profile, http),
       error: (error) => this.updateProfileError(error),
     });
   }
 
-  private static updateProfileSuccess(data: any) {
+  private static updateProfileSuccess(data: any, profile: any, http: HttpClient) {
     if (data.ris == "ok") {
-      this.profileSubject.next(data.profile);
-      this.profile = data.profile;
+      this.getProfile(http, profile.email)
     }
     else alert(data.error);
   }

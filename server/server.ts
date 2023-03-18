@@ -300,24 +300,35 @@ app.post("/api-token/profile", function (req: any, res: any, next: NextFunction)
 });
 
 app.post('/api-token/update-profile', function (req: any, res: any, next: NextFunction) {
-  cloudinary.v2.uploader.upload(req.body.img, function (error: any, result: any) {
-    if (error) {
-      res.send({ ris: '', error: 'Error uploading the image' });
-    } else {
-      const collection = req["connessione"].db(DBNAME).collection("users");
-      collection.updateOne(
-        { _id: new ObjectId(req.body.userId) },
-        { $set: { name: req.body.name, username: req.body.username, email: req.body.email, img: result.url } })
-        .then((result: any) => {
-          res.send({ ris: "ok" });
-        }).catch((err: any) => {
-          res.status(500).send("Errore query " + err.message);
-        }).finally(() => {
-          req["connessione"].close();
-        });
-    }
-  });
+  let profile = req.body;
+  if (profile.imageChanged) {
+    cloudinary.v2.uploader
+      .upload(req.body.image, { folder: 'progettoEsame/profilePicture' })
+      .then((result: any) => {
+        profile.img = result.secure_url;
+        updateProfile(req, res, profile);
+      })
+      .catch((err: any) => {
+        res.status(500).send("Errore query " + err.message);
+      })
+  } else {
+    updateProfile(req, res, profile);
+  }
 });
+
+function updateProfile(req: any, res: any, profile: any) {
+  const collection = req["connessione"].db(DBNAME).collection("users");
+  collection.updateOne(
+    { _id: new ObjectId(profile._id) },
+    { $set: { name: profile.name, username: profile.username, email: profile.email, img: profile.img } })
+    .then((result: any) => {
+      res.send({ ris: "ok" });
+    }).catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    }).finally(() => {
+      req["connessione"].close();
+    });
+}
 
 app.post("/api/userById", function (req: any, res: any, next: NextFunction) {
   const collection = req["connessione"].db(DBNAME).collection("users");

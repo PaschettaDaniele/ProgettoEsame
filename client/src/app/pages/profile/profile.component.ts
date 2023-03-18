@@ -14,10 +14,11 @@ export class ProfileComponent {
   email: string | null = "";
   isLoading: boolean = true;
   isEditing: boolean = false;
+  imageChanged: boolean = false;
 
   nameEdit: string = "";
   usernameEdit: string = "";
-  emailEdit: string  = "";
+  emailEdit: string = "";
 
   constructor(private http: HttpClient) {
     LoadingService.show();
@@ -42,6 +43,7 @@ export class ProfileComponent {
     this.profile.name = this.nameEdit;
     this.profile.username = this.usernameEdit;
     this.profile.email = this.emailEdit;
+    this.profile.imageChanged = this.imageChanged;
     ProfileService.updateProfile(this.http, this.profile);
   }
 
@@ -53,6 +55,7 @@ export class ProfileComponent {
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.profile.image = reader.result;
+        this.imageChanged = true;
       }
     }
   }
