@@ -1,3 +1,4 @@
-<div class="container-marketplace">
+<app-loading [width]="100" *ngIf="isLoading"></app-loading>
+<div class="container-marketplace" *ngIf="!isLoading">
   <div class="col-card" *ngFor="let card of places"><app-marketplace-card [card] = "card" [placesFull] = "placesFull"></app-marketplace-card></div>
 </div>

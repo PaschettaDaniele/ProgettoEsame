@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { LoadingService } from 'src/app/utils/loading.service';
 import { MarketplaceService } from 'src/app/utils/marketplace.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class MarketplaceComponent implements OnInit {
   houses: any;
   places: any;
   placesFull: any;
+  isLoading: boolean = true;
   // cardProva = {
   //   apartmentType: 'Room',
   //   owner: "Mario Rossi",
@@ -31,6 +33,7 @@ export class MarketplaceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    LoadingService.show();
     MarketplaceService.getPlaces(this.http);
     MarketplaceService.houses$.subscribe((value) => this.houses = value);
     MarketplaceService.rooms$.subscribe((value) => this.rooms = value);
@@ -52,6 +55,8 @@ export class MarketplaceComponent implements OnInit {
           persons: place.persons
         }
       });
+      LoadingService.hide();
+      this.isLoading = false;
     });
   }
 }
