@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MarketplaceDetailsService } from 'src/app/utils/marketplace-details.service';
 
 @Component({
   selector: 'app-marketplace-card',
@@ -20,10 +21,15 @@ export class MarketplaceCardComponent implements OnInit {
     image: string,
     persons: string,
   };
-  @Input() placesFull: any;
+  @Input() placeFull: any;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  openDetail() {
+    debugger
+    MarketplaceDetailsService.show(this.placeFull)
   }
 }
