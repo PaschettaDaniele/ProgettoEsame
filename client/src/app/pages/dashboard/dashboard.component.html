@@ -2,12 +2,25 @@
 <app-loading [width]="100" *ngIf="isLoading"></app-loading>
 
 <div *ngIf="!isLoading">
-  <div class="row placesRow container" *ngIf="places.length">
-    <div class="col-md-6 roomsRow">
-      <app-dashboard-card [place]="room" (choosenPlace)="choosenPlace(room)" *ngFor="let room of rooms"></app-dashboard-card>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row placesRow container" *ngIf="places.length">
+        <app-dashboard-slider [places]="places"></app-dashboard-slider>
+      </div>
     </div>
-    <div class="col-md-6 apartmentsRow">
-      <app-dashboard-card [place]="apartment" (choosenPlace)="choosenPlace(apartment)" *ngFor="let apartment of apartments"></app-dashboard-card>
+    <div class="col-md-6">
+      <div class="titleDecoration">
+        <h3>Commands</h3>
+      </div>
+      <div class="commandsOptions">
+        <a routerLink="/places/new" class="btn">Add new Place</a>
+        <a class="btn">Edit Selected</a>
+        <a class="btn">Delete Selected</a>
+      </div>
     </div>
+  </div>
+
+  <div class="row details">
+
   </div>
 </div>

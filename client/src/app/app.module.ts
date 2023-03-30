@@ -13,7 +13,7 @@ import { MarketplaceComponent } from './pages/marketplace/marketplace.component'
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FooterComponent } from './globalComponents/footer/footer.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { DashboardCardComponent } from './pages/dashboard/dashboard-card/dashboard-card.component';
+import { DashboardSliderComponent } from './pages/dashboard/dashboard-slider/dashboard-slider.component';
 import { MarketplaceCardComponent } from './pages/marketplace/marketplace-card/marketplace-card.component';
 import { MarketplaceDetailsComponent } from './pages/marketplace/marketplace-details/marketplace-details.component';
 
@@ -28,7 +28,7 @@ import { MarketplaceDetailsComponent } from './pages/marketplace/marketplace-det
     ProfileComponent,
     FooterComponent,
     DashboardComponent,
-    DashboardCardComponent,
+    DashboardSliderComponent,
     MarketplaceCardComponent,
     MarketplaceDetailsComponent,
   ],

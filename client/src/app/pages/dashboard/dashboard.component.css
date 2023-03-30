@@ -8,3 +8,36 @@
 .placesRow {
   margin-inline: auto;
 }
+.titleDecoration {
+  background-color: var(--primary-color);
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  padding: 5px 20px;
+}
+
+h3 { margin: 0;}
+
+.btn {
+  background: linear-gradient(45deg,#000000,var(--primary-color));
+  transition: all .3s ease-out;
+  background-size: 1px 500px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #555;
+  right: 10px;
+  bottom: 10px;
+}
+
+.btn:hover {
+  background-position: 500px;
+  color: #fff;
+}
+
+.commandsOptions {
+  margin-top: 20px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+}

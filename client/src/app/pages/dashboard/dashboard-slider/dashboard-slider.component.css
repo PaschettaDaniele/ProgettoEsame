@@ -1,0 +1,31 @@
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.arrow.left {
+  left: -40px;
+}
+
+.arrow.right {
+  right: -40px;
+}
+
+#carouselBox {
+  position: relative;
+  margin: 10px 100px;
+  border: 1px solid #ababab;
+  border-radius: 10px;
+}
+
+
+#carouselBox:hover .arrow {
+  opacity: .5;
+}
+
+.imgSlider {
+  border-radius: 10px;
+}
