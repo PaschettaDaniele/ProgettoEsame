@@ -11,10 +11,17 @@ export class DashboardService {
   static places: any[] = [];
   private static placesSubject: Subject<any[]> = new Subject<any[]>();
 
+  static selectedPlace: any = null;
+  static selectedPlaceSubject: Subject<any> = new Subject<any>();
+
   constructor() { }
 
   static get places$() {
     return this.placesSubject.asObservable();
+  }
+
+  static get selectedPlace$() {
+    return this.selectedPlaceSubject.asObservable();
   }
 
   static getPlacesByUser(httpClient: HttpClient, usernameOrEmail: string|null) {

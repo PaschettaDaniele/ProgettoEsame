@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DashboardService } from 'src/app/utils/dashboard.service';
 
 @Component({
@@ -7,9 +7,9 @@ import { DashboardService } from 'src/app/utils/dashboard.service';
   styleUrls: ['./dashboard-slider.component.css']
 })
 export class DashboardSliderComponent implements OnInit {
+  selectedIndex: number = 0;
   @Input() places: Array<any> = [];
 
-  selectedIndex: number = 0;
   disabledLeft: boolean = false;
   disabledRight: boolean = false;
   constructor() {
@@ -21,6 +21,8 @@ export class DashboardSliderComponent implements OnInit {
     }
     this.places[0].active = true;
     this.disabledLeft = true;
+    DashboardService.selectedPlace = this.places[0];
+    DashboardService.selectedPlaceSubject.next(this.places[0]);
     console.log(this.places)
   }
 
@@ -30,6 +32,8 @@ export class DashboardSliderComponent implements OnInit {
     if(this.selectedIndex - 1 === 0) this.disabledLeft = true;
     this.selectedIndex--;
     this.disabledRight = false;
+    DashboardService.selectedPlace = this.places[this.selectedIndex];
+    DashboardService.selectedPlaceSubject.next(this.places[this.selectedIndex]);
   }
 
   slideRight() {
@@ -38,5 +42,7 @@ export class DashboardSliderComponent implements OnInit {
     if(this.selectedIndex + 1 === this.places.length - 1) this.disabledRight = true;
     this.selectedIndex++;
     this.disabledLeft = false;
+    DashboardService.selectedPlace = this.places[this.selectedIndex];
+    DashboardService.selectedPlaceSubject.next(this.places[this.selectedIndex]);
   }
 }

@@ -9,11 +9,11 @@ import { LoadingService } from 'src/app/utils/loading.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-
-
   places: Array<any> = [];
   rooms: Array<any> = [];
   apartments: Array<any> = [];
+  selectedPlace: any;
+  selectedPlaceSubscription: any;
 
   placesSubject: any;
 
@@ -31,6 +31,9 @@ export class DashboardComponent {
       LoadingService.hide();
       this.isLoading = false;
     });
+    this.selectedPlaceSubscription = DashboardService.selectedPlace$.subscribe(selectedPlace => {
+      this.selectedPlace = selectedPlace;
+    });
   }
 
   loadRoomsAndApartments() {
@@ -38,10 +41,6 @@ export class DashboardComponent {
       if(place.type == 'room') this.rooms.push(place);
       else if(place.type == 'apartment') this.apartments.push(place);
     }
-  }
-
-  choosenPlace(place: any) {
-    console.log(place);
   }
 
   ngOnInit(): void {
