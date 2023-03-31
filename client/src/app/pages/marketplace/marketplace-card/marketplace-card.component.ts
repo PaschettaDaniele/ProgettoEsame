@@ -23,13 +23,17 @@ export class MarketplaceCardComponent implements OnInit {
   };
   @Input() placeFull: any;
 
-  constructor() { }
+  constructor() {
+    MarketplaceDetailsService.place$.subscribe(place => {
+      debugger
+    })
+  }
 
   ngOnInit(): void {
   }
 
   openDetail() {
-    debugger
     MarketplaceDetailsService.show(this.placeFull)
+    location.href = "/marketplace/details";
   }
 }

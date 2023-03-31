@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MarketplaceDetailsService } from 'src/app/utils/marketplace-details.service';
 
 @Component({
@@ -7,19 +7,13 @@ import { MarketplaceDetailsService } from 'src/app/utils/marketplace-details.ser
   styleUrls: ['./marketplace-details.component.css']
 })
 export class MarketplaceDetailsComponent {
-  isShown: boolean = false;
-  place: any;
-  constructor() { }
+  place: any = undefined;
 
-  show() {
-    this.place = MarketplaceDetailsService.place;
-    this.isShown = true;
-    console.log(this.place, this.isShown);
+  constructor() {
+    MarketplaceDetailsService.place$.subscribe(place => {
+      debugger
+      this.place = place;
+      console.log(this.place);
+    })
   }
-
-  hide() {
-    this.place = null;
-    this.isShown = false;
-  }
-
 }
