@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { placeModel } from 'src/app/models/place.model';
 import { MarketplaceDetailsService } from 'src/app/utils/marketplace-details.service';
 
 @Component({
@@ -7,33 +8,17 @@ import { MarketplaceDetailsService } from 'src/app/utils/marketplace-details.ser
   styleUrls: ['./marketplace-card.component.css']
 })
 export class MarketplaceCardComponent implements OnInit {
-  @Input() card!: {
-    apartmentType: string,
-    owner: string,
-    price: {
-      value: number,
-      currency: string
-    },
-    location: {
-      city: string,
-      country: string
-    },
-    image: string,
-    persons: string,
-  };
-  @Input() placeFull: any;
+  @Input() place!: placeModel;
 
   constructor() {
-    MarketplaceDetailsService.place$.subscribe(place => {
-      debugger
-    })
+
   }
 
   ngOnInit(): void {
   }
 
   openDetail() {
-    MarketplaceDetailsService.show(this.placeFull)
+    MarketplaceDetailsService.show(this.place)
     location.href = "/marketplace/details";
   }
 }
