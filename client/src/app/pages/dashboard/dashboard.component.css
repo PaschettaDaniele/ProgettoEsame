@@ -41,3 +41,28 @@ h3 { margin: 0;}
   align-items: center;
   gap: 10px;
 }
+
+.container {
+  margin: auto;
+  justify-content: center;
+}
+
+.cardDetails {
+  border: 1px solid #ababab;
+  border-radius: 10px;
+  padding: 20px 50px;
+  margin: 10px;
+  box-shadow: 0 0 10px #ebebeb;
+}
+
+.cardDetails h5 {
+  margin-bottom: 1rem;
+}
+
+.cardDetails p {
+  margin-bottom: .2rem;
+}
+
+.actionsRow {
+  margin-block: 30px 50px;
+}

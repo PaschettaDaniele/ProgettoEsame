@@ -16,7 +16,7 @@
 
 #carouselBox {
   position: relative;
-  margin: 10px 100px;
+  margin: 0px 100px;
   border: 1px solid #ababab;
   border-radius: 10px;
 }

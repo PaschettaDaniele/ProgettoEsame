@@ -23,7 +23,6 @@ export class DashboardSliderComponent implements OnInit {
     this.disabledLeft = true;
     DashboardService.selectedPlace = this.places[0];
     DashboardService.selectedPlaceSubject.next(this.places[0]);
-    console.log(this.places)
   }
 
   slideLeft() {

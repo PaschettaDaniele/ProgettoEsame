@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DashboardService } from 'src/app/utils/dashboard.service';
 import { LoadingService } from 'src/app/utils/loading.service';
+import { placeModel } from 'src/app/models/place.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +13,15 @@ export class DashboardComponent {
   places: Array<any> = [];
   rooms: Array<any> = [];
   apartments: Array<any> = [];
-  selectedPlace: any;
+
+  selectedPlace: placeModel | null = null;
   selectedPlaceSubscription: any;
 
   placesSubject: any;
 
   isLoading: boolean = true;
+  isShowingDetails: boolean = false;
+
   loadingSubscription: any;
 
   constructor(private httpClient: HttpClient) {

@@ -2,10 +2,13 @@
 <app-loading [width]="100" *ngIf="isLoading"></app-loading>
 
 <div *ngIf="!isLoading">
-  <div class="row">
+  <div class="row actionsRow">
     <div class="col-md-6">
-      <div class="row placesRow container" *ngIf="places.length">
-        <app-dashboard-slider [places]="places"></app-dashboard-slider>
+      <div class="row placesRow container">
+        <div class="noPlaces" *ngIf="places.length == 0">
+          <h3>No places yet</h3>
+        </div>
+        <app-dashboard-slider [places]="places" *ngIf="places.length != 0"></app-dashboard-slider>
       </div>
     </div>
     <div class="col-md-6">
@@ -13,14 +16,22 @@
         <h3>Commands</h3>
       </div>
       <div class="commandsOptions">
-        <a routerLink="/places/new" class="btn">Add new Place</a>
+        <a routerLink="/dashboard/new" class="btn">Add new Place</a>
         <a class="btn">Edit Selected</a>
         <a class="btn">Delete Selected</a>
       </div>
     </div>
   </div>
 
-  <div class="row details">
-    <!-- <p>Visibility: <span>{{selectedPlace.active ? 'Public' : 'Private'}}</span></p> -->
+  <div class="row details container" *ngIf="selectedPlace">
+    <div class="cardDetails">
+      <h5>Details</h5>
+      <p>Location: <span> {{selectedPlace.location.city + ", " + selectedPlace.location.country}} </span></p>
+      <p>Address: <span> {{selectedPlace.location.address}} </span></p>
+      <p>People: <span> {{selectedPlace.people.min + " - " + selectedPlace.people.max}} </span></p>
+      <p>Visibility: <span>{{selectedPlace.active ? 'Public' : 'Private'}}</span></p>
+    </div>
   </div>
+
+  <router-outlet></router-outlet>
 </div>
