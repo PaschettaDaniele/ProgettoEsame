@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { placeModel } from 'src/app/models/place.model';
 import { LoadingService } from 'src/app/utils/loading.service';
 import { MarketplaceService } from 'src/app/utils/marketplace.service';
 
@@ -11,23 +12,8 @@ import { MarketplaceService } from 'src/app/utils/marketplace.service';
 export class MarketplaceComponent implements OnInit {
   rooms: any;
   houses: any;
-  places: any;
-  placesFull: any;
+  places!: placeModel[];
   isLoading: boolean = true;
-  // cardProva = {
-  //   apartmentType: 'Room',
-  //   owner: "Mario Rossi",
-  //   price: {
-  //     value: 100,
-  //     currency: "mouth"
-  //   },
-  //   location: {
-  //     city: "Rome",
-  //     country: "Italy"
-  //   },
-  //   image: '../../../../assets/img/banner_background.jpg',
-  //   persons: '2 - 4'
-  // }
 
   constructor(private http: HttpClient) {
   }
@@ -38,22 +24,10 @@ export class MarketplaceComponent implements OnInit {
     MarketplaceService.houses$.subscribe((value) => this.houses = value);
     MarketplaceService.rooms$.subscribe((value) => this.rooms = value);
     MarketplaceService.places$.subscribe((value) => {
-      this.placesFull = value;
+      debugger
       this.places = value.map((place: any) => {
-        return {
-          apartmentType: place.type,
-          owner: place.ownerName ? place.ownerName : place.owner,
-          price: {
-            value: place.price.value,
-            currency: place.price.currency
-          },
-          location: {
-            city: place.city,
-            country: place.country
-          },
-          image: place.images[0],
-          persons: place.persons
-        }
+        place.owner = place.ownerName ? place.ownerName : place.owner;
+        return place;
       });
       LoadingService.hide();
       this.isLoading = false;

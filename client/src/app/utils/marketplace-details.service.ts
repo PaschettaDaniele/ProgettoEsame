@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { MarketplaceDetailsComponent } from 'src/app/pages/marketplace/marketplace-details/marketplace-details.component';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketplaceDetailsService {
-  static place: any;
-  static MarketplaceDetailsComponent: MarketplaceDetailsComponent = new MarketplaceDetailsComponent();
+  private static placeSubject: Subject<any> = new Subject<any>();
 
   constructor() { }
 
+  static get place$() {
+    return this.placeSubject.asObservable()
+  }
+
   static show(place: any) {
-    this.place = place;
-    this.MarketplaceDetailsComponent.show();
+    this.placeSubject.next(place)
   }
 
   static hide() {
-    this.place = null;
-    this.MarketplaceDetailsComponent.hide();
+    location.href = "/marketplace";
+    this.placeSubject.next(null)
   }
 
 }

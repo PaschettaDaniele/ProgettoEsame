@@ -7,6 +7,7 @@ import { MarketplaceComponent } from './pages/marketplace/marketplace.component'
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DashboardNewComponent } from './pages/dashboard/dashboard-new/dashboard-new.component';
+import { MarketplaceDetailsComponent } from './pages/marketplace/marketplace-details/marketplace-details.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -20,6 +21,8 @@ const routes: Routes = [
       { path: 'new', component: DashboardNewComponent }
     ]
   },
+  { path: "marketplace/details", component: MarketplaceDetailsComponent },
+  { path: "profile", component: ProfileComponent }
 ];
 
 @NgModule({
