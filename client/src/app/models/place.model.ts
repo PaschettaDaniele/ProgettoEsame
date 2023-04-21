@@ -13,6 +13,7 @@ export type placeModel = {
     }
   },
   owner: string,
+  ownerName?: string,
   active: boolean,
   images: string[],
   durationRent: 'short' | 'middle' | 'long',

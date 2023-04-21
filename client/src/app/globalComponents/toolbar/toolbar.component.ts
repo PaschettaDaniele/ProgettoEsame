@@ -2,6 +2,7 @@ import { Component, Output } from '@angular/core';
 import { ModalMenager } from '../../utils/modalsMenager';
 import { LoginService } from '../../utils/loginService.service';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,7 +14,7 @@ export class ToolbarComponent {
   logged: boolean = false;
   loggedObserved: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.loggedObserved = LoginService.logged$.subscribe((value) => {
       this.logged = value;
     });
@@ -29,12 +30,12 @@ export class ToolbarComponent {
     this.viewOptions();
   }
 
-  logout(){
+  logout() {
     LoginService.isLogged = false;
     this.logged = false;
     LoginService.logout(this.http);
     this.viewOptions();
-    location.href = '/';
+    this.router.navigate(['/']);
   }
 }
 

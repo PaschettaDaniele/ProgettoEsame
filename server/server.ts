@@ -263,6 +263,21 @@ app.get("/api/places", function (req: any, res: any, next: NextFunction) {
     });
 });
 
+app.post("/api/placeById", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  collection
+    .findOne({ _id: new ObjectId(req.body._id) })
+    .then((place: any) => {
+      res.send(place);
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
 app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction) {
   const collection = req["connessione"].db(DBNAME).collection("places");
   collection
@@ -333,11 +348,9 @@ function updateProfile(req: any, res: any, profile: any) {
 app.post("/api/userById", function (req: any, res: any, next: NextFunction) {
   const collection = req["connessione"].db(DBNAME).collection("users");
   collection
-    .find({ _id: new ObjectId(req.body.userId) })
-    .toArray()
-    .then((users: any) => {
-      console.log("user:", users[0])
-      res.send(users[0]);
+    .findOne({ _id: new ObjectId(req.body.userId) })
+    .then((user: any) => {
+      res.send(user);
     })
     .catch((err: any) => {
       res.status(500).send("Errore query " + err.message);
