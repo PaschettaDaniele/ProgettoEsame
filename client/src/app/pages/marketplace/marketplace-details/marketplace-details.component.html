@@ -1,3 +1,51 @@
-<div>
-  marketplace-details.component.html
+<app-loading [width]="100" *ngIf="isLoading"></app-loading>
+<div class="container top" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-9">
+      <p><span>{{place?.name}}</span>, <br> This is the details page </p>
+    </div>
+  </div>
+</div>
+<div class="mainContainer row" *ngIf="!isLoading">
+
+  <div class="col-7 ">
+    <section class="gallery" *ngIf="place">
+      <div class="gallery__item" *ngFor="let img of place.images let i = index">
+        <input type="radio" id="img-{{i}}" checked name="gallery" class="gallery__selector"/>
+        <img class="gallery__img" [src]="img" alt=""/>
+        <label for="img-{{i}}" class="gallery__thumb" *ngIf="place.images.length > 1"><img [src]="img" alt=""/></label>
+      </div>
+    </section>
+
+    <div class="divInfo">
+      <span class="txtOwner"><img [src]="place?.ownerModel?.img" class="img-thumbnail"><h4>{{place?.ownerModel?.username}}</h4></span>
+      <h5>Description:</h5>
+      <p>{{place?.description}}</p>
+      <div class="row">
+        <div class="col-8">
+          <h5>Address:</h5>
+          <p>{{place?.location?.address}}, {{place?.location?.city}} {{place?.location?.country}}</p>
+        </div>
+        <div class="col-4 d-flex justify-content-end">
+          <button class="btn btn-warning btnMappa" (click)="onClickMappa()">MAPPA</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-5">
+    <div class="prenotation">
+      <div class="row">
+        <div class="col-6">
+          <h5>Price:</h5>
+          <p>{{place?.price?.value}}€/{{place?.price?.period}}</p>
+        </div>
+        <div class="col-6">
+          <h5>People:</h5>
+          <p title="Qui vedi il numero di persone già prenotate">0 / {{place?.people?.max}} <svg fill="#000000" width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.5 8a5.5 5.5 0 118.596 4.547 9.005 9.005 0 015.9 8.18.75.75 0 01-1.5.045 7.5 7.5 0 00-14.993 0 .75.75 0 01-1.499-.044 9.005 9.005 0 015.9-8.181A5.494 5.494 0 013.5 8zM9 4a4 4 0 100 8 4 4 0 000-8z"/><path d="M17.29 8c-.148 0-.292.01-.434.03a.75.75 0 11-.212-1.484 4.53 4.53 0 013.38 8.097 6.69 6.69 0 013.956 6.107.75.75 0 01-1.5 0 5.193 5.193 0 00-3.696-4.972l-.534-.16v-1.676l.41-.209A3.03 3.03 0 0017.29 8z"/></svg></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="map"></div>
+
 </div>

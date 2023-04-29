@@ -62,9 +62,11 @@ export class MarketplaceService {
       next: (data: any) => {
         if (i != undefined) {
           this.places[i].ownerName = data.username;
+          this.places[i].ownerModel = data;
           MarketplaceService.placesSubject.next(this.places);
         } else {
           this.place.ownerName = data.username;
+          this.place.ownerModel = data;
           MarketplaceService.placeSubject.next(this.place);
         }
       },

@@ -1,3 +1,5 @@
+import { userModel } from "./user.model"
+
 export type placeModel = {
   _id: string,
   name: string,
@@ -13,6 +15,7 @@ export type placeModel = {
     }
   },
   owner: string,
+  ownerModel?: userModel,
   ownerName?: string,
   active: boolean,
   images: string[],
@@ -26,4 +29,5 @@ export type placeModel = {
     max: number,
     min: number
   }
+  squareMeters: number
 }

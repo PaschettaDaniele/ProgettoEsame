@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+}
+
+h4,
+h5 {
+  margin: 0;
+}
+
+.top {
+  height: 200px;
+  background-color: var(--primary-color);
+}
+
+.top p {
+  margin: 0px;
+  color: #555;
+  margin-left: 10px;
+  font-family: 'Spline Sans Mono';
+  font-size: 20px;
+}
+
+.top p>span {
+  font-weight: 700;
+  font-size: 23px;
+}
+
+.top>div {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.gallery {
+  display: flex;
+  margin: 10px auto;
+  max-width: 600px;
+  position: relative;
+  padding-top: 66.6666666667%;
+}
+
+@media screen and (min-width: 600px) {
+  .gallery {
+    padding-top: 260px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .gallery {
+    padding-top: 339px;
+  }
+}
+
+.gallery__img {
+  position: absolute;
+  max-height: 340px;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gallery__item {
+  overflow: hidden;
+}
+
+.gallery__thumb {
+  padding-top: 6px;
+  margin: 6px;
+  display: block;
+  max-width: 80px;
+  position: relative;
+  width: 70px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.gallery__thumb>img {
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gallery__selector {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.gallery__selector:checked+.gallery__img {
+  opacity: 1;
+}
+
+.gallery__selector:checked~.gallery__thumb {
+  box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+.img-thumbnail {
+  width: 50px;
+  border-color: white;
+  border-radius: 5px;
+}
+
+.divInfo {
+  margin-top: 20px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+.divInfo>p {
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: justify;
+}
+
+.divInfo>h5 {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.divInfo>.row {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.container {
+  margin: 0;
+  width: 100vw;
+  max-width: unset;
+}
+
+.mainContainer {
+  margin: 50px 0 0 100px;
+}
+
+.txtOwner {
+  display: flex;
+  height: fit-content;
+  align-items: center;
+}
+
+.btnMappa {
+  max-height: 60px;
+  margin-right: -14px;
+}
+
+.prenotation {
+  margin-top: 20%;
+  padding-top: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 3px solid var(--primary-color);
+  width: 100%;
+  max-width: 400px;
+}

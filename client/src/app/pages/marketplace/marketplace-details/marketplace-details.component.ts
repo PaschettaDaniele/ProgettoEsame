@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { placeModel } from 'src/app/models/place.model';
+import { userModel } from 'src/app/models/user.model';
 import { MarketplaceService } from 'src/app/utils/marketplace.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { MarketplaceService } from 'src/app/utils/marketplace.service';
   styleUrls: ['./marketplace-details.component.css']
 })
 export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
+  isLoading: boolean = true;
   place?: placeModel;
   placeObserved: any;
 
@@ -22,6 +24,7 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
         MarketplaceService.getPlace(this.http, params['id'])
         this.placeObserved = MarketplaceService.place$.subscribe((value) => {
           this.place = value;
+          this.isLoading = false;
           console.log(this.place)
         });
       }
@@ -30,5 +33,9 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.placeObserved.unsubscribe();
+  }
+
+  onClickMappa() {
+    alert("Mappa non disponibile")
   }
 }
