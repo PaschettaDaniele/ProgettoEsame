@@ -17,6 +17,7 @@ import { DashboardSliderComponent } from './pages/dashboard/dashboard-slider/das
 import { MarketplaceCardComponent } from './pages/marketplace/marketplace-card/marketplace-card.component';
 import { MarketplaceDetailsComponent } from './pages/marketplace/marketplace-details/marketplace-details.component';
 import { DashboardNewComponent } from './pages/dashboard/dashboard-new/dashboard-new.component';
+import { DashboardEditComponent } from './pages/dashboard/dashboard-edit/dashboard-edit.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { DashboardNewComponent } from './pages/dashboard/dashboard-new/dashboard
     MarketplaceCardComponent,
     MarketplaceDetailsComponent,
     DashboardNewComponent,
+    DashboardEditComponent,
   ],
   imports: [
     BrowserModule,

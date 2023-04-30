@@ -3,7 +3,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  opacity: 0;
+  opacity: .3;
 }
 
 .arrow.left {
@@ -27,5 +27,16 @@
 }
 
 .imgSlider {
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-item {
+  height: 250px;
+}
+
+.carousel-inner {
   border-radius: 10px;
 }

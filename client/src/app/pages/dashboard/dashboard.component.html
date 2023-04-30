@@ -1,7 +1,17 @@
 <div class="padding" *ngIf="isLoading"></div>
 <app-loading [width]="100" *ngIf="isLoading"></app-loading>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && !isNew && !isEditing">
+  <div class="top">
+    <div class="row">
+      <div class="col-md-9">
+        <p>That's your <span>dashboard</span>, <br>here you can menage your marketplace.</p>
+      </div>
+      <div class="col-md-3">
+        <a routerLink="/dashboard/new" class="btnNew" (click)="isNew = true">Add new Place</a>
+      </div>
+    </div>
+  </div>
   <div class="row actionsRow">
     <div class="col-md-6">
       <div class="row placesRow container">
@@ -16,9 +26,8 @@
         <h3>Commands</h3>
       </div>
       <div class="commandsOptions">
-        <a routerLink="/dashboard/new" class="btn">Add new Place</a>
-        <a class="btn">Edit Selected</a>
-        <a class="btn">Delete Selected</a>
+        <a class="btn" routerLink="/dashboard/edit" [ngClass]="{disabled: places.length == 0}" (click)="isEditing = true">Edit Selected</a>
+        <a class="btn" [ngClass]="{disabled: places.length == 0}" (click)="deleteSelected()">Delete Selected</a>
       </div>
     </div>
   </div>
@@ -32,6 +41,5 @@
       <p>Visibility: <span>{{selectedPlace.active ? 'Public' : 'Private'}}</span></p>
     </div>
   </div>
-
-  <router-outlet></router-outlet>
 </div>
+<router-outlet *ngIf="isNew || isEditing"></router-outlet>

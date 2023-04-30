@@ -35,7 +35,7 @@ h3 { margin: 0;}
 
 .commandsOptions {
   margin-top: 20px;
-  margin-right: 10px;
+  margin-right: 110px;
   display: flex;
   justify-content: end;
   align-items: center;
@@ -64,5 +64,52 @@ h3 { margin: 0;}
 }
 
 .actionsRow {
-  margin-block: 30px 50px;
+  margin-block: 50px;
+}
+
+.top {
+  height: 200px;
+  background-color: var(--primary-color);
+}
+
+.top p {
+  margin: 0px;
+  color: #555;
+  margin-left: 30px;
+  font-family: 'Spline Sans Mono';
+  font-size: 20px;
+}
+
+.top p > span {
+  font-weight: 700;
+  font-size: 23px;
+}
+
+.top > div {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.container.top {
+  margin: 0;
+  width: 100vw;
+  max-width: unset;
+}
+
+.btnNew {
+  transition: all .2s ease-out;
+  border-radius: 15px;
+  /* width: 100%; */
+  padding-block: 10px;
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  text-decoration: none;
+}
+
+.btnNew:hover {
+  background-color: #eee;
 }

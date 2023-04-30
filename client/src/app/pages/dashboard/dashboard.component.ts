@@ -14,13 +14,19 @@ export class DashboardComponent {
   rooms: Array<any> = [];
   apartments: Array<any> = [];
 
-  selectedPlace: placeModel | null = null;
+  selectedPlace: placeModel | undefined = undefined;
   selectedPlaceSubscription: any;
 
   placesSubject: any;
 
   isLoading: boolean = true;
   isShowingDetails: boolean = false;
+
+  isNew: boolean = false;
+  isNewSubscription: any;
+
+  isEditing: boolean = false;
+  isEditingSubscription: any;
 
   loadingSubscription: any;
 
@@ -38,6 +44,12 @@ export class DashboardComponent {
     this.selectedPlaceSubscription = DashboardService.selectedPlace$.subscribe(selectedPlace => {
       this.selectedPlace = selectedPlace;
     });
+    this.isNewSubscription = DashboardService.isNewSubject.subscribe(isNew => {
+      this.isNew = isNew;
+    });
+    this.isEditingSubscription = DashboardService.isEditingSubject.subscribe(isEditing => {
+      this.isEditing = isEditing;
+    });
   }
 
   loadRoomsAndApartments() {
@@ -47,8 +59,14 @@ export class DashboardComponent {
     }
   }
 
+  deleteSelected(){
+    DashboardService.deletePlace(this.httpClient, this.selectedPlace!._id);
+  }
+
   ngOnInit(): void {
     DashboardService.getPlacesByUser(this.httpClient, localStorage.getItem('usernameOrEmail'));
+    this.isNew = false;
+    this.isEditing = false;
   }
 
 }

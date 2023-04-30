@@ -243,10 +243,7 @@ app.use("/api-token/", function (req: any, res: any, next: NextFunction) {
 
 /* ********************* (Sezione 3) USER ROUTES  ************************** */
 
-app.post("/api-token/checkToken", function (req: Request, res: Response, next: NextFunction) {
-  res.send({ ris: "ok" });
-});
-
+//#region /api/ for not logged users
 app.get("/api/places", function (req: any, res: any, next: NextFunction) {
   const collection = req["connessione"].db(DBNAME).collection("places");
   collection
@@ -263,10 +260,96 @@ app.get("/api/places", function (req: any, res: any, next: NextFunction) {
     });
 });
 
-app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction) {
-  const collection = req["connessione"].db(DBNAME).collection("places");
+app.post("/api/userById", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("users");
   collection
-    .insertOne(req.body)
+    .find({ _id: new ObjectId(req.body.userId) })
+    .toArray()
+    .then((users: any) => {
+      console.log("user:", users[0])
+      res.send(users[0]);
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
+app.post("/api/register", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("users");
+  collection.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] }).then((result: any) => {
+    if (result) {
+      res.status(400).send("Email o username già esistenti");
+    }
+    else {
+      let passwordHash = bcrypt.hashSync(req.body.password, 10);
+      let user = {
+        username: req.body.username,
+        email: req.body.email,
+        password: passwordHash,
+        role: "user",
+        name: req.body.name,
+        active: true
+      };
+      collection.insertOne(user)
+        .then((result: any) => {
+          let token = createToken(user);
+          writeCookie(res, token);
+          res.send({ ris: "ok" });
+        })
+        .catch((err: any) => {
+          res.status(500).send("Errore query " + err.message);
+        })
+        .finally(() => {
+          req["connessione"].close();
+        });
+    }
+  });
+});
+//#endregion
+
+//#region /api-token/ for logged users 
+app.post("/api-token/checkToken", function (req: Request, res: Response, next: NextFunction) {
+  res.send({ ris: "ok" });
+});
+
+app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction) {
+  const collectionU = req["connessione"].db(DBNAME).collection("users");
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  uploadImg();
+
+  function uploadImg(i:number = 0){
+    if(req.body.images.length -1 < i){ 
+      cloudinary.v2.uploader.upload(req.body.images[i], { folder: 'progettoEsame/placesPictures' }).then((results: any) => {
+        req.body.images[i] = results.secure_url;
+        uploadImg(i+1);
+      }).catch((err: any) => {
+        res.status(500).send("Errore caricamento immagini " + err.message);
+      });
+    }
+    else {
+      collectionU.findOne({username: req.body.owner}).then((result: any) => {
+        req.body.owner = result._id.toString();
+        collection.insertOne(req.body).then((result: any) => {
+          res.send({ ris: "ok" });
+        }).catch((err: any) => {
+          res.status(500).send("Errore query " + err.message);
+        }).finally(() => {
+          req["connessione"].close();
+        });
+      }).catch((err: any) => {
+        res.status(500).send("Errore query " + err.message);
+      });
+    }
+  }
+});
+
+app.post("/api-token/deletePlace", function (req: any, res: any, next: NextFunction) {
+  let _id = new ObjectId(req.body.placeId)
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  collection.deleteOne({ _id })
     .then((result: any) => {
       res.send({ ris: "ok" });
     })
@@ -330,24 +413,6 @@ function updateProfile(req: any, res: any, profile: any) {
     });
 }
 
-app.post("/api/userById", function (req: any, res: any, next: NextFunction) {
-  const collection = req["connessione"].db(DBNAME).collection("users");
-  collection
-    .find({ _id: new ObjectId(req.body.userId) })
-    .toArray()
-    .then((users: any) => {
-      console.log("user:", users[0])
-      res.send(users[0]);
-    })
-    .catch((err: any) => {
-      res.status(500).send("Errore query " + err.message);
-    })
-    .finally(() => {
-      req["connessione"].close();
-    });
-});
-
-
 app.post("/api-token/placesByUser", function (req: any, res: any, next: NextFunction) {
   const usernameOrEmail = req.body.usernameOrEmail;
   const collection = req["connessione"].db(DBNAME).collection("users");
@@ -356,9 +421,9 @@ app.post("/api-token/placesByUser", function (req: any, res: any, next: NextFunc
     .findOne({ $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }] })
     .then((user: any) => {
       if (user) {
-        const collection = req["connessione"].db(DBNAME).collection("places");
-        collection
-          .find({ owner: user._id.toString() })
+        const collectionP = req["connessione"].db(DBNAME).collection("places");
+        collectionP
+          .find({owner: user._id.toString()})
           .toArray()
           .then((places: any) => {
             res.send({ places: places, ris: "ok" });
@@ -374,38 +439,6 @@ app.post("/api-token/placesByUser", function (req: any, res: any, next: NextFunc
     .catch((err: any) => {
       res.status(500).send("Errore query " + err.message);
     })
-});
-
-app.post("/api/register", function (req: any, res: any, next: NextFunction) {
-  const collection = req["connessione"].db(DBNAME).collection("users");
-  collection.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] }).then((result: any) => {
-    if (result) {
-      res.status(400).send("Email o username già esistenti");
-    }
-    else {
-      let passwordHash = bcrypt.hashSync(req.body.password, 10);
-      let user = {
-        username: req.body.username,
-        email: req.body.email,
-        password: passwordHash,
-        role: "user",
-        name: req.body.name,
-        active: true
-      };
-      collection.insertOne(user)
-        .then((result: any) => {
-          let token = createToken(user);
-          writeCookie(res, token);
-          res.send({ ris: "ok" });
-        })
-        .catch((err: any) => {
-          res.status(500).send("Errore query " + err.message);
-        })
-        .finally(() => {
-          req["connessione"].close();
-        });
-    }
-  });
 });
 
 app.post("/api-token/base64Cloudinary", (req: any, res: any, next: any) => {
@@ -430,7 +463,7 @@ app.post("/api-token/base64Cloudinary", (req: any, res: any, next: any) => {
       });
   }
 });
-
+//#endregion
 
 /* ********************** (Sezione 4) DEFAULT ROUTE  ************************* */
 // Default route
