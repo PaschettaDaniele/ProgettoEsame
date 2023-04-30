@@ -24,7 +24,6 @@ export class MarketplaceComponent implements OnInit {
     MarketplaceService.houses$.subscribe((value) => this.houses = value);
     MarketplaceService.rooms$.subscribe((value) => this.rooms = value);
     MarketplaceService.places$.subscribe((value) => {
-      debugger
       this.places = value.map((place: any) => {
         place.owner = place.ownerName ? place.ownerName : place.owner;
         return place;

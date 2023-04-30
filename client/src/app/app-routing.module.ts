@@ -13,7 +13,8 @@ import { DashboardEditComponent } from './pages/dashboard/dashboard-edit/dashboa
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: HomeComponent },
-  { path: "marketplace", component: MarketplaceComponent },
+  { path: "marketplace", component: MarketplaceComponent, pathMatch: "full" },
+  { path: "marketplace/details/:id", component: MarketplaceDetailsComponent },
   { path: "profile", component: ProfileComponent },
   {
     path: "dashboard",

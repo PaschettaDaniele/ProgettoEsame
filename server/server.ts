@@ -315,6 +315,21 @@ app.post("/api-token/checkToken", function (req: Request, res: Response, next: N
   res.send({ ris: "ok" });
 });
 
+app.post("/api/placeById", function (req: any, res: any, next: NextFunction) {
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  collection
+    .findOne({ _id: new ObjectId(req.body._id) })
+    .then((place: any) => {
+      res.send(place);
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
 app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction) {
   const collectionU = req["connessione"].db(DBNAME).collection("users");
   const collection = req["connessione"].db(DBNAME).collection("places");

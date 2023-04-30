@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/utils/loginService.service';
 import { ModalMenager } from 'src/app/utils/modalsMenager';
 
@@ -9,11 +10,11 @@ import { ModalMenager } from 'src/app/utils/modalsMenager';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  constructor(private httpClient: HttpClient) {}
-  dashboard(){
+  constructor(private httpClient: HttpClient, private router: Router) { }
+  dashboard() {
     LoginService.checkLogin(this.httpClient)
-    if(LoginService.isLogged) {
-      window.location.href = '/dashboard';
+    if (LoginService.isLogged) {
+      this.router.navigate(['/dashboard']);
     }
     else {
       ModalMenager.openLogin('login');
