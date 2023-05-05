@@ -15,6 +15,8 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
   place?: placeModel;
   placeObserved: any;
 
+  showMap: boolean = false;
+
   constructor(private route: ActivatedRoute, private http: HttpClient) {
   }
 
@@ -35,7 +37,7 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
     this.placeObserved.unsubscribe();
   }
 
-  onClickMappa() {
-    alert("Mappa non disponibile")
+  loadMap(event: any) {
+    (event.target as HTMLDivElement).style.height = "300px";
   }
 }
