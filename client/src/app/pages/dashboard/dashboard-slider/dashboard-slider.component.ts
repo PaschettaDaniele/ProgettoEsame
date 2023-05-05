@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DashboardService } from 'src/app/utils/dashboard.service';
 
 @Component({
@@ -9,11 +10,12 @@ import { DashboardService } from 'src/app/utils/dashboard.service';
 export class DashboardSliderComponent implements OnInit {
   selectedIndex: number = 0;
   @Input() places: Array<any> = [];
+  @Output() triggerSlide = new EventEmitter();
 
   disabledLeft: boolean = false;
   disabledRight: boolean = false;
-  constructor() {
-  }
+
+  constructor() {}
 
   ngOnInit(){
     for (const place of this.places) {
@@ -33,6 +35,7 @@ export class DashboardSliderComponent implements OnInit {
     this.disabledRight = false;
     DashboardService.selectedPlace = this.places[this.selectedIndex];
     DashboardService.selectedPlaceSubject.next(this.places[this.selectedIndex]);
+    this.triggerSlide.emit();
   }
 
   slideRight() {
@@ -43,5 +46,6 @@ export class DashboardSliderComponent implements OnInit {
     this.disabledLeft = false;
     DashboardService.selectedPlace = this.places[this.selectedIndex];
     DashboardService.selectedPlaceSubject.next(this.places[this.selectedIndex]);
+    this.triggerSlide.emit();
   }
 }

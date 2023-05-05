@@ -8,11 +8,30 @@
 .placesRow {
   margin-inline: auto;
 }
+
 .titleDecoration {
   background-color: var(--primary-color);
-  border-top-left-radius: 100px;
-  border-bottom-left-radius: 100px;
-  padding: 5px 20px;
+  padding: 30px 10px;
+  margin-top: 50px;
+}
+
+@media (min-width: 992px) {
+  .titleDecoration {
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    padding: 5px 20px;
+    margin-top: 0px;
+  }
+
+  .container {
+    margin: auto;
+    justify-content: center;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: unset;
 }
 
 h3 { margin: 0;}
@@ -34,17 +53,12 @@ h3 { margin: 0;}
 }
 
 .commandsOptions {
-  margin-top: 20px;
-  margin-right: 110px;
+  margin-top: 30px;
   display: flex;
   justify-content: end;
   align-items: center;
+  margin-right: 50px;
   gap: 10px;
-}
-
-.container {
-  margin: auto;
-  justify-content: center;
 }
 
 .cardDetails {
@@ -55,12 +69,36 @@ h3 { margin: 0;}
   box-shadow: 0 0 10px #ebebeb;
 }
 
+@media (min-width: 991px) {
+  .cardDetails {
+    min-height: 400px;
+    align-items: center;
+  }
+  .commandsOptions {
+    margin-top: 20px;
+    margin-right: 110px;
+  }
+}
+
+@media (max-width: 767px){
+  .cardDetails{
+    padding-inline: 0px;
+    border: none;
+    box-shadow: none;
+  }
+}
+
 .cardDetails h5 {
   margin-bottom: 1rem;
 }
 
 .cardDetails p {
   margin-bottom: .2rem;
+}
+
+.cardDetails > div:nth-child(2) p {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .actionsRow {
@@ -112,4 +150,37 @@ h3 { margin: 0;}
 
 .btnNew:hover {
   background-color: #eee;
+}
+
+.subImg {
+  object-fit: contain;
+  top: 50%;
+  width: clamp(350px, 50%, 100%);
+}
+
+.imgFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.transparent {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.arrow {
+  cursor: pointer;
+  opacity: .3;
+}
+
+.arrow:hover {
+  opacity: .7;
+}
+
+.blue {
+  color: var(--bs-blue);
 }

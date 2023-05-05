@@ -119,8 +119,13 @@
   margin-right: 20px;
 }
 
+.detailRow .col-md-12 > label {
+  margin-block: 5px;
+}
+
 .detailContainer {
   border: 1px solid #ababab;
   padding: 20px;
   border-radius: 10px;
+  gap: 10px;
 }

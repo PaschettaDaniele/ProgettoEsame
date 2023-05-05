@@ -21,11 +21,22 @@
   </div>
 
   <div class="row detailRow">
+    <label class="blue">Type of place:
+      <select [(ngModel)]="newPlace.type">
+        <option value="apartment">Apartment</option>
+        <option value="house">House</option>
+        <option value="room">Room</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="row detailRow">
     <label class="blue">Location:</label>
     <div class="col-md-12">
       <label>Country: <input type="text" [(ngModel)]="location.country"></label>
       <label>City: <input type="text" [(ngModel)]="location.city"></label>
       <label>Address: <input type="text" [(ngModel)]="location.address"></label>
+      <label>Square meters: <input type="number" [(ngModel)]="newPlace.squareMeters"></label>
     </div>
   </div>
 

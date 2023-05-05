@@ -45,12 +45,12 @@ export class DashboardNewComponent {
       people: {
         max: 0,
         min: 0
-      }
+      },
+      squareMeters: 0,
     }
   }
 
   onFileSelected(event: any) {
-    // get all the photos from the event and add the base64 to the images array
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
@@ -59,16 +59,6 @@ export class DashboardNewComponent {
         this.images.push(reader.result);
       }
     }
-    console.log(this.images);
-    // const file: File = event.target.files[0];
-    // if (file) {
-    //   // get the file in base64
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(file);
-    //   reader.onload = () => {
-    //     this.images.push(reader.result);
-    //   }
-    // }
   }
 
   empty() {

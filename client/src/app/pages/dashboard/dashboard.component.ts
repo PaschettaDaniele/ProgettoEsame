@@ -30,6 +30,10 @@ export class DashboardComponent {
 
   loadingSubscription: any;
 
+  indexSubImage: number = 0;
+  disabledLeft: boolean = true;
+  disabledRight: boolean = false;
+
   constructor(private httpClient: HttpClient) {
     LoadingService.show();
     this.loadingSubscription = LoadingService.loading$.subscribe(isLoading => {
@@ -61,6 +65,25 @@ export class DashboardComponent {
 
   deleteSelected(){
     DashboardService.deletePlace(this.httpClient, this.selectedPlace!._id);
+  }
+
+  slideLeft(){
+    this.indexSubImage--;
+    if(this.indexSubImage == 0) this.disabledLeft = true;
+    if(this.indexSubImage < this.selectedPlace!.images.length - 1) this.disabledRight = false;
+  }
+
+  slideRight(){
+    this.indexSubImage++;
+    if(this.indexSubImage > 0) this.disabledLeft = false;
+    if(this.indexSubImage == this.selectedPlace!.images.length - 1) this.disabledRight = true;
+  }
+
+  onSlideTriggered(){
+    this.indexSubImage = 0;
+    this.disabledLeft = true;
+    this.disabledRight = false;
+    if(this.selectedPlace!.images.length == 1) {this.disabledRight = true; this.disabledLeft = true;}
   }
 
   ngOnInit(): void {

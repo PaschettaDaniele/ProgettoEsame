@@ -13,15 +13,16 @@
     </div>
   </div>
   <div class="row actionsRow">
-    <div class="col-md-6">
+    <h3 class="blue" style="margin-left: 50px; margin-bottom: 20px;">Select and Menage your places:</h3>
+    <div class="col-lg-6">
       <div class="row placesRow container">
         <div class="noPlaces" *ngIf="places.length == 0">
           <h3>No places yet</h3>
         </div>
-        <app-dashboard-slider [places]="places" *ngIf="places.length != 0"></app-dashboard-slider>
+        <app-dashboard-slider [places]="places" *ngIf="places.length != 0" (triggerSlide)="onSlideTriggered()"></app-dashboard-slider>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6">
       <div class="titleDecoration">
         <h3>Commands</h3>
       </div>
@@ -33,12 +34,39 @@
   </div>
 
   <div class="row details container" *ngIf="selectedPlace">
-    <div class="cardDetails">
-      <h5>Details</h5>
-      <p>Location: <span> {{selectedPlace.location.city + ", " + selectedPlace.location.country}} </span></p>
-      <p>Address: <span> {{selectedPlace.location.address}} </span></p>
-      <p>People: <span> {{selectedPlace.people.min + " - " + selectedPlace.people.max}} </span></p>
-      <p>Visibility: <span>{{selectedPlace.active ? 'Public' : 'Private'}}</span></p>
+    <div class="cardDetails row">
+      <div class="col-xl-6">
+        <h3 class="blue">Details</h3>
+        <p>Location: <span> {{selectedPlace.location.city + ", " + selectedPlace.location.country}} </span></p>
+        <p>Address: <span> {{selectedPlace.location.address}} </span></p>
+        <p>Square Meters: <span> {{selectedPlace.squareMeters}}</span></p>
+        <p>People: <span> {{selectedPlace.people.min + " - " + selectedPlace.people.max}} </span></p>
+        <p>Visibility: <span> {{selectedPlace.active ? 'Public' : 'Private'}}</span></p>
+        <p>Price: <span> {{selectedPlace.price.value}}{{selectedPlace.price.currency == 'euro' ? '€' : ''}} / {{selectedPlace.price.period}} </span></p>
+      </div>
+      <div class="col-xl-6">
+        <p class="blue">Images
+          <div class="imgFrame">
+            <div class="arrow left noselect" [ngClass]="{'transparent': disabledLeft}" (click)="slideLeft()">
+              <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="0.1" d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="#323232"/>
+                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
+                <path d="M8 12L16 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M11 9L8.08704 11.913V11.913C8.03897 11.961 8.03897 12.039 8.08704 12.087V12.087L11 15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <img class="subImg noselect" [src]="selectedPlace.images[indexSubImage]">
+            <div class="arrow right noselect" [ngClass]="{'transparent':disabledRight}" (click)="slideRight()">
+              <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="0.1" d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="#323232"/>
+                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
+                <path d="M16 12L8 12" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 15L15.913 12.087V12.087C15.961 12.039 15.961 11.961 15.913 11.913V11.913L13 9" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        <!-- </p> -->
+      </div>
     </div>
   </div>
 </div>
