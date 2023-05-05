@@ -13,7 +13,7 @@
         </div>
         <div class="col-7">
           <br>
-          <p><span class="prezzo">{{place.price.value}} €</span>/{{place.price.period}}</p>
+          <p><span class="prezzo">{{place.price.value}} {{place.price.currency=="euro" ? '€' : '$'}}</span>/{{place.price.period}}</p>
         </div>
       </div>
       <div class="cardFooter">

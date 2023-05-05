@@ -27,7 +27,8 @@ export type placeModel = {
   },
   people: {
     max: number,
-    min: number
+    min: number,
+    booked: number
   }
   squareMeters: number
 }
