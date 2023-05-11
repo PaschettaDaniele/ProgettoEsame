@@ -69,4 +69,12 @@ export class LoginComponent {
       LoadingService.hide();
     }
   }
+
+  keyPressPassword(event: Event) {
+    if (event instanceof KeyboardEvent) {
+      if (event.key == "Enter") {
+        this.login();
+      }
+    }
+  }
 }

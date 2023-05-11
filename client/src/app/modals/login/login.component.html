@@ -29,7 +29,7 @@
         <div class="row" *ngIf="!isRegistration">
           <!-- Login -->
             <input type="text" class="form-control" placeholder="Email or Username" [(ngModel)]="usernameOrEmail">
-            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password">
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password" (keypress)="keyPressPassword($event)">
         </div>
 
       </div>

@@ -36,7 +36,8 @@
   align-items: center;
   justify-content: center;
 }
-.close > span {
+
+.close>span {
   display: block;
   padding-bottom: 3px;
   margin-inline: 3px;
@@ -50,7 +51,7 @@
 #btnConfirm {
   background-color: #fff;
   color: #000;
-  border: 1px solid var(--primary-color)  ;
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   padding: 10px;
   transition: .2s;
@@ -59,7 +60,8 @@
   max-height: 35px;
 }
 
-#btnConfirm:hover {
+#btnConfirm:hover,
+#btnConfirm:focus {
   background-color: var(--primary-color);
 }
 
@@ -71,7 +73,7 @@
   margin-bottom: 0;
 }
 
-.notAn > a {
+.notAn>a {
   text-decoration: underline !important;
   cursor: pointer;
   text-decoration: none;

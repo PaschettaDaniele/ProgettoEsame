@@ -36,8 +36,4 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.placeObserved.unsubscribe();
   }
-
-  loadMap(event: any) {
-    (event.target as HTMLDivElement).style.height = "300px";
-  }
 }
