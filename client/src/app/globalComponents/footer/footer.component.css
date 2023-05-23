@@ -24,3 +24,21 @@
   width: 100vw;
 }
 
+h6,p {
+  text-align: end;
+  margin: 0;
+}
+
+h6 {
+  color: #000;
+}
+
+p {
+  color: #555;
+}
+
+.footer-bottom > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

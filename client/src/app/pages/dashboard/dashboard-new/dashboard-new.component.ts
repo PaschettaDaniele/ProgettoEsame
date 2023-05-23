@@ -44,7 +44,8 @@ export class DashboardNewComponent {
       },
       people: {
         max: 0,
-        min: 0
+        min: 0,
+        booked: 0
       },
       squareMeters: 0,
     }
