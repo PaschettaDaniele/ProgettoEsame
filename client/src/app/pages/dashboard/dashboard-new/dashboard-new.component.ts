@@ -69,21 +69,21 @@ export class DashboardNewComponent {
     this.images = [];
   }
 
-  cancel(){
+  cancel() {
     this.empty()
     DashboardService.isNewSubject.next(false);
   }
-  done(){
-    if(this.images.length < 0){
+  done() {
+    if (this.images.length < 0) {
       alert('You must add at least one image');
       return;
-    } else if(!this.location.city || !this.location.country || !this.location.address){
+    } else if (!this.location.city || !this.location.country || !this.location.address) {
       alert('You must add a location');
       return;
-    } else if(!this.people.min || !this.people.max){
+    } else if (!this.people.min || !this.people.max) {
       alert('You must add a number of people');
       return;
-    } else if(this.price.value < 0){
+    } else if (this.price.value < 0) {
       alert('You must add a price');
       return;
     } else {
@@ -92,11 +92,11 @@ export class DashboardNewComponent {
   }
 
   save() {
-    if(this.people.max<this.people.min) this.people.max = this.people.min;
+    if (this.people.max < this.people.min) this.people.max = this.people.min;
     this.newPlace!.location = this.location;
     this.newPlace!.people = this.people;
     this.newPlace!.price = this.price;
     this.newPlace!.images = this.images;
-    DashboardService.saveNewPlace(this.httpClient ,this.newPlace);
+    DashboardService.saveNewPlace(this.httpClient, this.newPlace);
   }
 }
