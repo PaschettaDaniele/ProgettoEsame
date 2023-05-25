@@ -188,3 +188,12 @@
   color: #fff;
   margin-left: 40px;
 }
+
+@media (max-width: 552px){
+  .content {
+    display: none;
+  }
+  .imgSection {
+    height: 200px;
+  }
+}

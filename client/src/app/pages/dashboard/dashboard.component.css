@@ -181,6 +181,26 @@ h3 { margin: 0;}
   opacity: .7;
 }
 
+@media (max-width: 510px) {
+  .arrow {
+    opacity: 1;
+    position: absolute;
+
+  }
+  .arrow>svg {
+    fill: var(--primary-color);
+  }
+  .imgFrame{
+    position:relative;
+  }
+  .arrow.left {
+    left: 0px;
+  }
+  .arrow.right {
+    right: 0px;
+  }
+}
+
 .blue {
   color: var(--bs-blue);
 }

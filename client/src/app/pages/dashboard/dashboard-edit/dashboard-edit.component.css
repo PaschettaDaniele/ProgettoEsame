@@ -62,3 +62,52 @@
   align-items: center;
   gap: 20px;
 }
+
+label {margin-right: 10px;}
+
+.detailRow {
+  margin-top: 20px;
+}
+
+.btnBecameSeller {
+  display: inline-block;
+  background: linear-gradient(45deg,#000000,var(--primary-color));
+  transition: all .3s ease-out;
+  background-size: 1px 500px;
+  cursor: pointer;
+  border: 1px solid #555;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+#file-input {
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.fileButtonContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.image {
+  max-height: 200px;
+  max-width: inherit;
+}
+
+.rowImages .btnTop:hover {
+  border: 1px solid #ebebeb;
+  color: #000000;
+  box-shadow: 0 0 2px #ebebeb;
+}
+
+.rowImages > .col-md-4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

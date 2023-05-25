@@ -18,6 +18,7 @@ import { MarketplaceCardComponent } from './pages/marketplace/marketplace-card/m
 import { MarketplaceDetailsComponent } from './pages/marketplace/marketplace-details/marketplace-details.component';
 import { DashboardNewComponent } from './pages/dashboard/dashboard-new/dashboard-new.component';
 import { DashboardEditComponent } from './pages/dashboard/dashboard-edit/dashboard-edit.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { DashboardEditComponent } from './pages/dashboard/dashboard-edit/dashboa
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

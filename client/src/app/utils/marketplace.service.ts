@@ -4,6 +4,7 @@ import { LoadingService } from './loading.service';
 import { Subject } from 'rxjs';
 import { ModalMenager } from './modalsMenager';
 import { placeModel } from '../models/place.model';
+import { LoginService } from './loginService.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class MarketplaceService {
   }
 
   public static async getPlaces(http: HttpClient) {
-    return await http.get<any>(`http://localhost:1337/api/places`, { withCredentials: true }).subscribe({
+    return await http.get<any>(`${LoginService.URL}/api/places`, { withCredentials: true }).subscribe({
       next: (data) => this.getPlacesSuccess(http, data),
       error: (error) => this.getPlacesError(error),
     });
@@ -58,7 +59,7 @@ export class MarketplaceService {
   }
 
   private static async getOwnerName(http: HttpClient, ownerId: string, i?: number) {
-    http.post<any>(`http://localhost:1337/api/userById`, { userId: ownerId }, { withCredentials: true }).subscribe({
+    http.post<any>(`${LoginService.URL}/api/userById`, { userId: ownerId }, { withCredentials: true }).subscribe({
       next: (data: any) => {
         if (i != undefined) {
           this.places[i].ownerName = data.username;
@@ -79,7 +80,7 @@ export class MarketplaceService {
   }
 
   public static async getPlace(http: HttpClient, id: string) {
-    return await http.post<any>(`http://localhost:1337/api/placeById`, { _id: id }, { withCredentials: true }).subscribe({
+    return await http.post<any>(`${LoginService.URL}/api/placeById`, { _id: id }, { withCredentials: true }).subscribe({
       next: (data) => this.getPlaceSuccess(http, data),
       error: (error) => this.getPlacesError(error),
     });

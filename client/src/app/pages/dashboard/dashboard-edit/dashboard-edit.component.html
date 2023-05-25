@@ -52,4 +52,25 @@
     </div>
   </div>
 
+  <div class="row detailRow">
+    <label class="blue">Images:</label>
+    <div class="col-md-12">
+      <label class="image blue">Add image:</label>
+      <div class="fileButtonContainer">
+        <label for="file-input" class="custom-image-button btn btnBecameSeller">
+          <i class="fa fa-upload"></i> Upload Image
+        </label>
+        <input type="file" id="file-input" (change)="onFileSelected($event)">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="row rowImages">
+        <div class="col-md-4" *ngFor="let image of selectedPlace.images; let i = index">
+          <img class="image" src="{{image}}" alt="image" />
+          <a class="btnTop" (click)="removeImage(i)">Remove</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

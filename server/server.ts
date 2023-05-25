@@ -330,6 +330,22 @@ app.post("/api/placeById", function (req: any, res: any, next: NextFunction) {
     });
 });
 
+app.post("/api-token/updatePlace", function (req: any, res: any, next: NextFunction) {
+  let _id = req.body._id;
+  delete req.body._id;
+  const collection = req["connessione"].db(DBNAME).collection("places");
+  collection.updateOne({ _id: new ObjectId(_id) }, { $set: req.body })
+    .then((result: any) => {
+      res.send({ ris: "ok" });
+    })
+    .catch((err: any) => {
+      res.status(500).send("Errore query " + err.message);
+    })
+    .finally(() => {
+      req["connessione"].close();
+    });
+});
+
 app.post("/api-token/addPlace", function (req: any, res: any, next: NextFunction) {
   const collectionU = req["connessione"].db(DBNAME).collection("users");
   const collection = req["connessione"].db(DBNAME).collection("places");

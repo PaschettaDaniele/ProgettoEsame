@@ -9,22 +9,14 @@ import { DashboardService } from 'src/app/utils/dashboard.service';
 })
 export class DashboardEditComponent {
 
-  isEditingSubscription: any;
   isEditing: boolean = false;
-
-  selectedPlaceSubscription: any;
   selectedPlace: any = null;
 
 
 
   constructor(private httpClient: HttpClient) {
-    this.isEditingSubscription = DashboardService.isEditingSubject.subscribe(isEditing => {
-      this.isEditing = isEditing;
-    });
-    this.selectedPlaceSubscription = DashboardService.selectedPlace$.subscribe(selectedPlace => {
-      this.selectedPlace = selectedPlace;
-      console.log(this.selectedPlace);
-    });
+    this.isEditing = DashboardService.isEditing;
+    this.selectedPlace = DashboardService.selectedPlace;
   }
 
   cancel(){
@@ -32,6 +24,22 @@ export class DashboardEditComponent {
   }
 
   done(){
+    DashboardService.updatePlace(this.httpClient, this.selectedPlace);
+    DashboardService.isEditingSubject.next(false);
+  }
 
+  onFileSelected(e: Event){
+    let files: FileList | null = (e.target as HTMLInputElement).files;
+    for (let i = 0; i < files!.length; i++) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files![i]);
+      reader.onload = () => {
+        this.selectedPlace.images.push(reader.result);
+      }
+    }
+  }
+
+  removeImage(index: number){
+    this.selectedPlace.images.splice(index, 1);
   }
 }

@@ -10,6 +10,7 @@ import { ProfileService } from './profile.service';
 export class LoginService {
   static isLogged: boolean = false;
   private static loggedSubject: Subject<boolean> = new Subject<boolean>();
+  static readonly URL = window.location.href.split('/')[0] + '//' + window.location.href.split('/')[2]
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +19,7 @@ export class LoginService {
   }
 
   static checkLogin(http: HttpClient) {
-    return http.post<any>(`http://localhost:1337/api-token/checkToken`, {}, { withCredentials: true }).subscribe(data => {
+    return http.post<any>(`${LoginService.URL}/api-token/checkToken`, {}, { withCredentials: true }).subscribe(data => {
       LoginService.isLogged = (data.ris == "ok");
       LoginService.loggedSubject.next(LoginService.isLogged);
     });
@@ -26,7 +27,7 @@ export class LoginService {
 
   //#region Login service
   static login(http: HttpClient, usernameOrEmail: string, password: string) {
-    return http.post<any>(`http://localhost:1337/api/login`, { usernameOrEmail, password }, { withCredentials: true }).subscribe({
+    return http.post<any>(`${LoginService.URL}/api/login`, { usernameOrEmail, password }, { withCredentials: true }).subscribe({
       next: (data) => this.loginSuccess(data, usernameOrEmail),
       error: (error) => this.loginError(error),
     });
@@ -59,7 +60,7 @@ export class LoginService {
 
   //#region Register service
   static register(http: HttpClient, username: string, email: string, password: string, name: string) {
-    return http.post<any>(`http://localhost:1337/api/register`, { username, email, password, name }, { withCredentials: true }).subscribe({
+    return http.post<any>(`${LoginService.URL}/api/register`, { username, email, password, name }, { withCredentials: true }).subscribe({
       next: data => this.registerSuccess(data, username),
       error: e => this.registerError(e)
     });
@@ -82,7 +83,7 @@ export class LoginService {
 
   //#region Logout service
   static logout(http: HttpClient) {
-    return http.post<any>(`http://localhost:1337/api/logout`, {}, { withCredentials: true }).subscribe({
+    return http.post<any>(`${LoginService.URL}/api/logout`, {}, { withCredentials: true }).subscribe({
       next: (data) => this.logoutSuccess(data),
       error: (error) => this.logoutError(error),
     });
