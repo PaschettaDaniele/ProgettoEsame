@@ -13,7 +13,7 @@ import { URLService } from './URLService.service';
 export class MarketplaceService {
   public static places: placeModel[];
   private static placesSubject = new Subject<any>();
-  public static place: placeModel;
+  public static place: placeModel | undefined;
   private static placeSubject = new Subject<any>();
   public static rooms: any;
   private static roomsSubject = new Subject<any>();
@@ -66,7 +66,7 @@ export class MarketplaceService {
           this.places[i].ownerName = data.username;
           this.places[i].ownerModel = data;
           MarketplaceService.placesSubject.next(this.places);
-        } else {
+        } else if (this.place != undefined) {
           this.place.ownerName = data.username;
           this.place.ownerModel = data;
           MarketplaceService.placeSubject.next(this.place);
@@ -78,6 +78,10 @@ export class MarketplaceService {
 
   private static getPlacesError(error: any) {
     console.log(error);
+    MarketplaceService.places = [];
+    MarketplaceService.place = undefined;
+    MarketplaceService.placesSubject.next([]);
+    MarketplaceService.placeSubject.next(undefined);
   }
 
   public static async getPlace(http: HttpClient, id: string) {
