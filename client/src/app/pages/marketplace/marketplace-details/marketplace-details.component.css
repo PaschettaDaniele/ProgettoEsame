@@ -41,7 +41,7 @@ img {
   margin: 10px auto;
   max-width: 600px;
   position: relative;
-  padding-top: 56.4%;
+  padding-top: 350px;
 }
 
 .gallery__img {
@@ -164,10 +164,10 @@ img {
 }
 
 .prenotationEnd {
-  margin-top: 826;
+  margin-top: 665px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .prenotation {
     margin: 0 auto;
     max-width: 600px;

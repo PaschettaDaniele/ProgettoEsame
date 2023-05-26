@@ -1,4 +1,9 @@
 <app-loading [width]="100" *ngIf="isLoading"></app-loading>
+<div class="container top" *ngIf="!isLoading">
+  <div class="row">
+      <p>This is the <span class="bold">Marketplace</span> </p>
+  </div>
+</div>
 <div class="container-marketplace" *ngIf="!isLoading">
   <div class="col-card" *ngFor="let place of places"><app-marketplace-card [place] = "place"></app-marketplace-card></div>
 </div>

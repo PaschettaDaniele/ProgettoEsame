@@ -67,7 +67,7 @@ a:hover {
   color: #000;
 }
 
-.infoDiv>h3::after {
+.infoDiv>h4::after {
   content: '';
   position: relative;
   display: block;
@@ -77,7 +77,7 @@ a:hover {
   background-color: #000;
 }
 
-.marketCard:hover h3::after {
+.marketCard:hover h4::after {
   content: '';
   width: 65%;
 }

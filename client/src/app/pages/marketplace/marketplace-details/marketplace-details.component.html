@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="col-md-5">
-    <div class="prenotation" [ngClass]="{stick : (window.scrollY > 300 && window.scrollY < 826), prenotationEnd : window.scrollY > 825}">
+    <div class="prenotation" [ngClass]="{stick : window.innerWidth > 767 && (window.scrollY > 300 && window.scrollY < 879), prenotationEnd : window.innerWidth > 767 && window.scrollY > 878}">
       <div class="d-flex justify-content-center">
         <h3>{{place.type}}</h3>
       </div>
