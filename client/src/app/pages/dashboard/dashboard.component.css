@@ -29,6 +29,18 @@
   }
 }
 
+@media (max-width: 991px) {
+  .actionsRow h3.blue {
+    margin-left: 0 !important;
+    text-align: center;
+  }
+  .commandsOptions {margin-inline: auto;}
+}
+
+.actionsRow h3.blue {
+  margin-left: 50px;
+}
+
 .container {
   width: 100%;
   max-width: unset;
