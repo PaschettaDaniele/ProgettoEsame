@@ -4,6 +4,7 @@ import { LoadingService } from './loading.service';
 import { Subject } from 'rxjs';
 import { ModalMenager } from './modalsMenager';
 import { LoginService } from './loginService.service';
+import { URLService } from './URLService.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ProfileService {
 
   //#region  getProfile
   public static getProfile(http: HttpClient, usernameOrEmail: string | null) {
-    return http.post<any>(`${LoginService.URL}/api-token/profile`, { usernameOrEmail }, { withCredentials: true }).subscribe({
+    return http.post<any>(`${URLService.aggiornaURL()}/api-token/profile`, { usernameOrEmail }, { withCredentials: true }).subscribe({
       next: (data) => this.getProfileSuccess(data),
       error: (error) => this.getProfileError(error),
     });
@@ -44,7 +45,7 @@ export class ProfileService {
   //#region updateProfile
 
   public static updateProfile(http: HttpClient, profile: any) {
-    return http.post<any>(`${LoginService.URL}/api-token/update-profile`, profile, { withCredentials: true }).subscribe({
+    return http.post<any>(`${URLService.aggiornaURL()}/api-token/update-profile`, profile, { withCredentials: true }).subscribe({
       next: (data) => this.updateProfileSuccess(data, profile, http),
       error: (error) => this.updateProfileError(error),
     });
