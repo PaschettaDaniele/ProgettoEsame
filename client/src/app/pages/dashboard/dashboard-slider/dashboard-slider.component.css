@@ -14,11 +14,30 @@
   right: -40px;
 }
 
+@media (max-width: 565px){
+  .arrow {
+    top: 110%;
+    opacity: ;
+  }
+}
+
 #carouselBox {
   position: relative;
   margin: 0px 100px;
   border: 1px solid #ababab;
   border-radius: 10px;
+}
+
+@media (max-width: 565px) {
+  #carouselBox {
+    margin: 0px;
+  }
+  .arrow.left {
+    left: 30px;
+  }
+  .arrow.right {
+    right: 30px;
+  }
 }
 
 
