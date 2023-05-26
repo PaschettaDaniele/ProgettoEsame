@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { placeModel } from 'src/app/models/place.model';
 import { userModel } from 'src/app/models/user.model';
@@ -14,6 +14,7 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   place?: placeModel;
   placeObserved: any;
+  window: Window = window;
 
   showMap: boolean = false;
 
@@ -25,9 +26,14 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
       if (params['id']) {
         MarketplaceService.getPlace(this.http, params['id'])
         this.placeObserved = MarketplaceService.place$.subscribe((value) => {
-          this.place = value;
-          this.isLoading = false;
-          console.log(this.place)
+          if (value) {
+            this.place = value;
+            this.isLoading = false;
+            console.log(this.place)
+          } else {
+            this.isLoading = false;
+
+          }
         });
       }
     });
@@ -35,5 +41,9 @@ export class MarketplaceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.placeObserved.unsubscribe();
+  }
+
+  @HostListener('window:scroll', ['$event']) windowScroll($event: any) {
+    this.window = window;
   }
 }
